@@ -1,0 +1,18 @@
+.Layout {
+	height: 100%;
+	box-sizing: border-box;
+	display: grid;
+	grid-template-rows: 1fr auto;
+	row-gap: 1rem;
+}
+
+.main {
+	background-color: gold;
+	display: grid;
+	grid-template-columns: 6fr 1fr;
+	margin: 0 2rem;
+}
+
+.main > main {
+	background-color: var(--color-white);
+}

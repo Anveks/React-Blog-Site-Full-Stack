@@ -1,0 +1,23 @@
+.Header {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  align-items: center;
+  margin: 0 5rem;
+  color: var(--color-white);
+}
+
+.logo {
+  font-size: 1.5rem;
+  text-align: left;
+  margin-left: 1rem;
+  font-weight: bold;
+}
+
+.logo > a {
+  color: var(--color-white);
+}
+
+.categories {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}

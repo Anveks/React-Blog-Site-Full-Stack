@@ -1,0 +1,12 @@
+.Login > form {
+  display: grid;
+  grid-template-columns: max-content 1fr; /* Adjust column sizes as needed */
+  grid-gap: 0.5rem; 
+  text-align: left;
+  margin: 0 .5rem;
+}
+
+.Login > form > input {
+  border: transparent;
+}
+
