@@ -11,6 +11,8 @@ export class ArticleModel {
   public headImage: string;
   public views: number;
   public publicationDate: string;
+  public authorFullName: string;
+  public commentsNumber: number;
 
   public constructor(article: ArticleModel){
     this.articleId = article.articleId;

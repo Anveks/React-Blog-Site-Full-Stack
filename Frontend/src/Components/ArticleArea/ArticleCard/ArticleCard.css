@@ -1,0 +1,67 @@
+.ArticleCard {
+	display: grid;
+  grid-template-columns: 1fr 2fr;
+  margin: 0 .5rem;
+  align-items: center;
+}
+
+.container-left, .views, .comments-number {
+  font-size: 12px;
+  font-style: italic;
+  text-align: left;
+  white-space: nowrap;
+  color: var(--color-primary);
+  height: 100%;
+}
+
+.author-date {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.container-left > img {
+  display: block;
+  width: 100%;
+  object-fit: cover;
+  border-radius: .3rem;
+  cursor: pointer;
+}
+
+.container-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-align: left;
+  margin: 0.5rem;
+  cursor: pointer;
+}
+
+.title:hover {
+  color: var(--color-primary)
+}
+
+.preview-text {
+  text-align: left;
+  margin: 0.5rem;
+}
+
+.details {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-left: 0.5rem;
+}
+
+/* .views {
+  text-align: left;
+}
+
+.comments-number {
+  text-align: right;
+} */

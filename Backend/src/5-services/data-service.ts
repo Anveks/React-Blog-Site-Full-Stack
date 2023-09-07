@@ -3,9 +3,17 @@ import { ArticleModel } from "../2-models/articles-model";
 import dal from "../4-utils/dal";
 import { CommentModel } from "../2-models/comment-model";
 
-// get all vacations:
+// get all articles:
 async function getAllArticles(): Promise<ArticleModel[]>{
-  const sql = "SELECT * FROM articles";
+  // const sql = "SELECT * FROM articles";
+  const sql = `SELECT articles.*, CONCAT(users.firstName, ' ', users.lastName) AS authorFullName, COALESCE(comment_counts.commentCount, 0) AS commentsNumber
+  FROM articles
+  INNER JOIN users ON articles.authorId = users.userId
+  LEFT JOIN (
+      SELECT articleId, COUNT(*) AS commentCount
+      FROM comments
+      GROUP BY articleId
+  ) AS comment_counts ON articles.articleId = comment_counts.articleId;`;
   const articles = await dal.execute(sql);
   return articles;
 };
