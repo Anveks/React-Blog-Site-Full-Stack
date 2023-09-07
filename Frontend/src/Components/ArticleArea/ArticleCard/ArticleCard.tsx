@@ -1,21 +1,31 @@
+import { useNavigate } from "react-router-dom";
 import { ArticleModel } from "../../../Models/ArticleModel";
 import dateFormatter from "../../../Services/DateFormatter";
 import "./ArticleCard.css";
 
 function ArticleCard(article: ArticleModel): JSX.Element {
 
-    console.log(article);
-    const { title, authorFullName, previewImage, previewText, publicationDate, tags, views, commentsNumber } = article;
+    const { articleId, title, authorFullName, previewImage, previewText, publicationDate, tags, views, commentsNumber } = article;
+
+    const navigate = useNavigate();
+
+    const openDetails = () => {
+        navigate(`/article/${articleId}`);
+    }
 
     return (
-        <div className="ArticleCard">
+        <div className="ArticleCard" onClick={openDetails}>
 
-            <div className="container-left">
+            <div className="container-top">
                 <div className="author-date">
                     <p>{dateFormatter(publicationDate)}</p>
                     <p>{authorFullName}</p>
                 </div>
 
+                <p className="tags">{tags}</p>
+            </div>
+
+            <div className="container-image">
                 <img src="https://img.freepik.com/free-vector/matrix-style-binary-code-digital-falling-numbers-blue-background_1017-37387.jpg?w=360" />
             </div>
 
@@ -28,6 +38,8 @@ function ArticleCard(article: ArticleModel): JSX.Element {
                     <p className="comments-number">Comments: {commentsNumber}</p>
                 </div>
             </div>
+
+            <hr />
 
         </div>
     );

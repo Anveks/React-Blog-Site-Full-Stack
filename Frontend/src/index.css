@@ -30,6 +30,7 @@ body {
   --color-light: rgba(255, 255,255, 0.6);
   --color-font-primary: #333333;;
   --color-contrast: gold;
+  --color-gray: whitesmoke;
 
   /* preparing the responsive width for the future: */
   --container-width-lg: 75%;

@@ -13,9 +13,19 @@ async function getAllArticles(): Promise<ArticleModel[]>{
       SELECT articleId, COUNT(*) AS commentCount
       FROM comments
       GROUP BY articleId
-  ) AS comment_counts ON articles.articleId = comment_counts.articleId;`;
+  ) AS comment_counts ON articles.articleId = comment_counts.articleId`;
   const articles = await dal.execute(sql);
   return articles;
+};
+
+// get one:
+async function getOneArticle(id: number): Promise<ArticleModel> {
+  const sql = `SELECT articles.*, CONCAT(users.firstName, ' ', users.lastName) AS authorFullName
+  FROM articles
+  INNER JOIN users ON articles.authorId = users.userId
+  WHERE articles.articleId = ?`;
+  const article = await dal.execute(sql, [id]);
+  return article[0];
 };
 
 // post a new article:
@@ -79,18 +89,21 @@ async function deleteArticle(id: number): Promise<void> {
 
 async function getCommentsPerArticle(id: number): Promise<CommentModel[]> {
   const sql = `
-SELECT
+  SELECT
   comments.commentId,
   comments.authorId AS commentAuthorId,
   comments.articleId,
   comments.content AS commentContent,
   comments.commentDate,
   COUNT(DISTINCT CASE WHEN likes.likeType = 1 THEN likes.userId END) AS likeCount,
-  COUNT(DISTINCT CASE WHEN likes.likeType = 0 THEN likes.userId END) AS dislikeCount
+  COUNT(DISTINCT CASE WHEN likes.likeType = 0 THEN likes.userId END) AS dislikeCount,
+  CONCAT(users.firstName, ' ', users.lastName) AS authorFullName
 FROM
   comments
 LEFT JOIN
   likes ON comments.commentId = likes.commentId
+LEFT JOIN
+  users ON comments.authorId = users.userId
 WHERE
   comments.articleId = ?
 GROUP BY
@@ -99,6 +112,7 @@ GROUP BY
   comments.articleId,
   comments.content,
   comments.commentDate;
+
   `;
   const comments = await dal.execute(sql, [id]);
   return comments;
@@ -138,6 +152,7 @@ async function removeLike(userId: number, commentId: number): Promise<void>{
 
 export default {
   getAllArticles,
+  getOneArticle,
   addArticle,
   updateArticle,
   deleteArticle,

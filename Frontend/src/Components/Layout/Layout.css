@@ -4,6 +4,7 @@
 	display: grid;
 	grid-template-rows: 1fr auto;
 	row-gap: 1rem;
+	margin-bottom: 2rem;
 }
 
 .main {
@@ -11,8 +12,10 @@
 	display: grid;
 	grid-template-columns: 6fr 1fr;
 	margin: 0 2rem;
+	border-radius: .5rem;
 }
 
 .main > main {
 	background-color: var(--color-white);
+	border-radius: .5rem;
 }

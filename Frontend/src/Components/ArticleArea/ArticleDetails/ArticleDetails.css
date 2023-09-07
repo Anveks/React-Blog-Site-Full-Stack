@@ -1,0 +1,27 @@
+.ArticleDetails {
+	display: flex;
+  flex-direction: column;
+  padding: 0 1rem;
+}
+
+.details-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.details-image > img {
+  margin: auto;
+  width: 70%;
+  height: 18rem;
+  object-fit: cover;
+  border-radius: .2rem;
+}
+
+.preview-text {
+  font-weight: bold;
+}
+
+.main-text {
+  text-align: justify;
+}

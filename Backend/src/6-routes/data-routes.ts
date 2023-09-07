@@ -16,6 +16,18 @@ router.get("/articles", async (request: Request, response: Response, next: NextF
     }
 });
 
+// GET ONE
+router.get("/articles/:id([0-9]+)", async (request: Request, response: Response, next: NextFunction) => {
+    try {
+        const id = +request.params.id;
+        const article = await dataService.getOneArticle(id);
+        response.json(article);
+    }
+    catch(err: any) {
+        next(err);        
+    }
+});
+
 // ADD
 router.post("/articles", async (request: Request, response: Response, next: NextFunction) => {
     try {

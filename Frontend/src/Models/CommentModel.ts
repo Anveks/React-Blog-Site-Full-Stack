@@ -2,15 +2,10 @@
 export class CommentModel {
   public commentId: number;
   public authorId: number;
+  public authorFullName: string;
   public articleId: number;
-  public content: string;
+  public commentContent: string;
   public commentDate: string;
-
-  public constructor(comment: CommentModel){
-    this.commentId = comment.commentId;
-    this.authorId = comment.authorId;
-    this.articleId = comment.articleId;
-    this.content = comment.content;
-    this.commentDate = comment.commentDate;
-  }
+  public dislikeCount: number;
+  public likeCount: number;
 }

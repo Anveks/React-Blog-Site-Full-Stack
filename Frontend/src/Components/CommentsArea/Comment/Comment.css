@@ -1,0 +1,58 @@
+.Comment {
+	display: grid;
+  grid-template-columns: 1fr 5fr;
+  background-color: var(--color-gray);
+  margin: 1rem;
+  border-radius: .3rem;
+}
+
+.comment-image {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  font-style: italic;
+  border-right: 1px solid var(--color-font-primary);
+  padding-left: .5rem;
+  padding-bottom: .5rem;
+}
+
+.comment-image > img {
+  width: 65%;
+  border-radius: .3rem;
+}
+
+.date-content {
+  position: relative;
+  padding-left: .5rem;
+  text-align: left;
+}
+
+.date-content > div:last-child {
+  justify-content: flex-end;
+}
+
+.date {
+  font-size: 12px;
+  font-style: italic;
+  text-align: left;
+  white-space: nowrap;
+  color: var(--color-primary);
+}
+
+.likes {
+  display: flex;
+  padding-right: .3rem;
+  gap: 1rem;
+  font-size: 15px;
+  position: absolute;
+  bottom: 0;
+  right: 1rem;
+}
+
+.likes > p:first-child {
+  color: olivedrab;
+}
+
+.likes > p:last-child {
+  color: crimson;
+}

@@ -11,6 +11,12 @@ class ArticlesService {
     return articles;
   }
 
+  public async getOneArticle(id: number):Promise<ArticleModel>{
+    const result = await axios.get<ArticleModel>(appConfig.articlesUrl + id);
+    const article = result.data;
+    return article;
+  }
+
 }
 
 const articleService = new ArticlesService();
