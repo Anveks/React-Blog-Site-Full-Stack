@@ -8,7 +8,7 @@ const router = express.Router();
 
 // login
 router.post("/auth/login", async (request: Request, response: Response, next: NextFunction) => {
-    try {
+    try {      
       const credentials = new CredentialsModel(request.body);
       const token = await authService.login(credentials);
       const user = cyber.decodeToken(token);
@@ -22,6 +22,7 @@ router.post("/auth/login", async (request: Request, response: Response, next: Ne
 // register
 router.post("/auth/register", async (request: Request, response: Response, next: NextFunction) => {
   try {
+    console.log(request.body);
     const user = new UserModel(request.body);
     const token = await authService.register(user);
     response.status(201).json(token);

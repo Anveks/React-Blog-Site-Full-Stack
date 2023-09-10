@@ -17,9 +17,13 @@ export class UserModel {
     this.userId = user.userId;
     this.firstName = user.firstName;
     this.lastName = user.lastName;
+    this.username = user.username;
     this.password = user.password;
     this.email = user.email;
     this.roleId = user.roleId;
+    this.registrationDate = user.registrationDate;
+    this.isBanned = user.isBanned;
+    this.isOnline = user.isOnline;
   }
 
   // post validation
@@ -27,9 +31,13 @@ export class UserModel {
     userId: Joi.number().optional().integer().positive(),
     firstName: Joi.string().required().min(2).max(60),
     lastName: Joi.string().required().min(2).max(60),
+    username: Joi.string().required(),
     password: Joi.string().required().min(4).max(1024),
     email: Joi.string().email().required().min(7).max(100),
-    roleId: Joi.number().optional()
+    roleId: Joi.number().optional(),
+    registrationDate: Joi.string().allow(""),
+    isBanned: Joi.number(),
+    isOnline: Joi.number()
 });
 
   public postValidation(): string {
