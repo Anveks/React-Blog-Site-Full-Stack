@@ -134,5 +134,19 @@ router.delete("/delete-likes", async (request: Request, response: Response, next
     }
 });
 
+// update views
+router.put("/update-views-by-id", async (request: Request, response: Response, next: NextFunction) => {
+    try {
+        console.log(request.body);
+        
+        const id = +request.body.id;
+        await dataService.updateViews(id);
+        response.sendStatus(204);
+    }
+    catch(err: any) {
+        next(err);        
+    }
+});
+
 export default router;
 

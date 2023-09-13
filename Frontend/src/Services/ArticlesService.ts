@@ -17,6 +17,10 @@ class ArticlesService {
     return article;
   }
 
+  public async updateViews(id: number): Promise<void> {   
+    await axios.put<number>(appConfig.updateViews, {id: id});
+  }
+
 }
 
 const articleService = new ArticlesService();

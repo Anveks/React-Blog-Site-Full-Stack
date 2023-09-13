@@ -6,6 +6,7 @@ class AppConfig {
  // data URL's: 
  public articlesUrl = "http://localhost:4000/api/articles/";
  public comments = "http://localhost:4000/api/comments/";
+ public updateViews = "http://localhost:4000/api/update-views-by-id";
 
  // update comment url?
  public updateComment = "http://localhost:4000/api/update-comments/"

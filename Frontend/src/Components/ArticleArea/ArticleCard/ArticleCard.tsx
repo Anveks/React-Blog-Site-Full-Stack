@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { ArticleModel } from "../../../Models/ArticleModel";
 import dateFormatter from "../../../Services/DateFormatter";
 import "./ArticleCard.css";
+import articleService from "../../../Services/ArticlesService";
 
 function ArticleCard(article: ArticleModel): JSX.Element {
 
@@ -13,8 +14,16 @@ function ArticleCard(article: ArticleModel): JSX.Element {
         navigate(`/article/${articleId}`);
     }
 
+    const updateViews = async () => {
+        try {
+            await articleService.updateViews(+articleId);
+        } catch (err: any) {
+            console.log(err);
+        }
+    }
+
     return (
-        <div className="ArticleCard" onClick={openDetails}>
+        <div className="ArticleCard" onClick={() => { openDetails(); updateViews() }}>
 
             <div className="container-top">
                 <div className="author-date">

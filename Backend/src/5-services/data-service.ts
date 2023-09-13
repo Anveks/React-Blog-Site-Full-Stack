@@ -150,6 +150,13 @@ async function removeLike(userId: number, commentId: number): Promise<void>{
   await dal.execute(sql, [userId, commentId]);
 }
 
+async function updateViews(id: number): Promise<void> {
+  const sql = `UPDATE articles
+  SET views = views + 1
+  WHERE articleId = ?;`;
+  await dal.execute(sql,[id]);
+}
+
 export default {
   getAllArticles,
   getOneArticle,
@@ -161,5 +168,6 @@ export default {
   updateComment,
   deleteComment,
   addLike,
-  removeLike
+  removeLike,
+  updateViews
 };
