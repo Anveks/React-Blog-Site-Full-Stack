@@ -23,9 +23,6 @@ function ArticleDetails(): JSX.Element {
             });
     }, []);
 
-    console.log(article);
-
-
     return (
         <div className="ArticleDetails">
             {article ? (

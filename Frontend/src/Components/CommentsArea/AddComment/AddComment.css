@@ -1,0 +1,23 @@
+.AddComment {
+	display: grid;
+  grid-template-columns: 1fr 5fr 0.5fr;
+  background-color: var(--color-gray);
+  gap: .5rem;
+  border-radius: 12px;
+  padding: 0.5rem;
+}
+
+.AddComment > h4 {
+  align-self: start;
+}
+
+.AddComment > textarea {
+  border: 1px solid var(--color-primary);
+  border-radius: 12px;
+  padding: 1rem;
+  resize: none;
+}
+
+.AddComment > button {
+  align-self: center;
+}

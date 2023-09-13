@@ -1,5 +1,5 @@
 import express, { NextFunction, Request, Response, request } from "express";
-import dataService from "../5-services/data-service";
+import dataService from "../5-services/articles-service";
 import { ArticleModel } from "../2-models/articles-model";
 import { CommentModel } from "../2-models/comment-model";
 
@@ -136,9 +136,7 @@ router.delete("/delete-likes", async (request: Request, response: Response, next
 
 // update views
 router.put("/update-views-by-id", async (request: Request, response: Response, next: NextFunction) => {
-    try {
-        console.log(request.body);
-        
+    try {  
         const id = +request.body.id;
         await dataService.updateViews(id);
         response.sendStatus(204);
