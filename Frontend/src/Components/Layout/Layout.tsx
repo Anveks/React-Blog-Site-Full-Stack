@@ -1,7 +1,7 @@
-import Login from "../AuthArea/Login/Login";
 import Header from "./Header/Header";
 import "./Layout.css";
 import Routing from "./Routing/Routing";
+import SideBar from "./SideBar/SideBar";
 
 function Layout(): JSX.Element {
     return (
@@ -10,7 +10,7 @@ function Layout(): JSX.Element {
 
             <div className="main">
                 <main><Routing /></main>
-                <aside><Login /></aside>
+                <aside><SideBar /></aside>
             </div>
 
         </div>

@@ -1,0 +1,18 @@
+.SideBar {
+	display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  border-radius: .5rem;
+  gap: .1rem;
+  margin-left: .1rem ;
+}
+
+.login {
+  grid-row: 1/ span 1;
+  background-color: var(--color-contrast);
+  border-radius: .5rem;
+}
+
+.random-article, .most-popular {
+  background-color: var(--color-light);
+  border-radius: .5rem;
+}
