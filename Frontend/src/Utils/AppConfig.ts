@@ -9,7 +9,8 @@ class AppConfig {
  public updateViews = "http://localhost:4000/api/update-views-by-id";
 
  // update comment url?
- public updateComment = "http://localhost:4000/api/update-comments/"
+ public deleteComment = "http://localhost:4000/api/delete-comment/"
+ public updateComment = "http://localhost:4000/api/update-comment/"
 
  // likes URL's:
  public addLike = "http://localhost:4000/api/add-likes";

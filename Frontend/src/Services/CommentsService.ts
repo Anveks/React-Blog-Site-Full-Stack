@@ -29,7 +29,7 @@ class CommentService {
   }
 
   public async deleteComment(id: number): Promise<void> {
-    await axios.delete<number>(appConfig.comments + id);
+    await axios.delete(appConfig.deleteComment + id);
   };
 
   public resetComments(): void {

@@ -1,14 +1,20 @@
 import { CommentModel } from "../../../Models/CommentModel";
 import { authStore } from "../../../Redux/AuthState";
+import commentService from "../../../Services/CommentsService";
 import dateFormatter from "../../../Services/DateFormatter";
 import "./Comment.css";
 
 function Comment(props: CommentModel): JSX.Element {
-    const { authorFullName, content, commentDate, dislikeCount, likeCount, authorId } = props;
+    const { authorFullName, content, commentDate, dislikeCount, likeCount, authorId, commentId } = props;
     const currentId = authStore.getState().user.userId;
 
-    console.log(props);
-
+    const deleteComment = async () => {
+        try {
+            await commentService.deleteComment(commentId);
+        } catch (err: any) {
+            console.log(err);
+        }
+    };
 
     return (
         <div className="Comment">
@@ -20,7 +26,7 @@ function Comment(props: CommentModel): JSX.Element {
             <div className="date-content">
                 <p className="date">{dateFormatter(commentDate)}</p>
                 {currentId === authorId
-                    ? <><button className="delete-btn">Delete</button>
+                    ? <><button className="delete-btn" onClick={deleteComment}>Delete</button>
                         <button className="upd-button">Update</button></>
                     : ""}
 
