@@ -7,7 +7,8 @@ export class CommentsState {
 
 export enum CommentsActionType {
   FetchComments,
-  AddComment
+  AddComment,
+  ResetComments
 }
 
 export interface CommentsAction {
@@ -22,10 +23,13 @@ export function commentsReducer(currentState = new CommentsState(), action: Comm
     case CommentsActionType.FetchComments:
       newState.comments = action.payload;
       break;
-    case CommentsActionType.AddComment:
-      console.log(action.payload);
+    case CommentsActionType.AddComment:     
       newState.comments = [...newState.comments, action.payload];
       break;
+    case CommentsActionType.ResetComments:
+      newState.comments = [];
+      break;
+
   }
 
   return newState;

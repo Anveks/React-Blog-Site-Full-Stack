@@ -3,6 +3,7 @@ import { ArticleModel } from "../../../Models/ArticleModel";
 import dateFormatter from "../../../Services/DateFormatter";
 import "./ArticleCard.css";
 import articleService from "../../../Services/ArticlesService";
+import commentService from "../../../Services/CommentsService";
 
 function ArticleCard(article: ArticleModel): JSX.Element {
 
@@ -22,8 +23,12 @@ function ArticleCard(article: ArticleModel): JSX.Element {
         }
     }
 
+    const resetComments = () => {
+        commentService.resetComments();
+    };
+
     return (
-        <div className="ArticleCard" onClick={() => { openDetails(); updateViews() }}>
+        <div className="ArticleCard" onClick={() => { openDetails(); updateViews(); resetComments() }}>
 
             <div className="container-top">
                 <div className="author-date">

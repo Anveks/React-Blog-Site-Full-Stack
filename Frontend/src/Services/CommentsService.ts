@@ -2,6 +2,8 @@ import axios from "axios";
 import appConfig from "../Utils/AppConfig";
 import { CommentModel } from "../Models/CommentModel";
 import { CommentsActionType, commentsStore } from "../Redux/CommentsState";
+import { authStore } from "../Redux/AuthState";
+import { getCurrentDateTime } from "./GetCurrentDate";
 
 class CommentService {
   public async getCommentsPerArticle(articleId: number): Promise<CommentModel[]> {
@@ -16,11 +18,23 @@ class CommentService {
     return comments;
   }
 
-  public async addComment(comment: Object): Promise<void> {
+  public async addComment(comment: any): Promise<void> {
     const result = await axios.post<CommentModel>(appConfig.comments, comment);
-    const newComment = result.data;
+    const newComment = result.data;    
+    newComment["authorFullName"] = authStore.getState().user.firstName + " " + authStore.getState().user.lastName;
+    newComment["commentDate"] = getCurrentDateTime();
+    newComment["dislikeCount"] = 0;
+    newComment["likeCount"] = 0;
     commentsStore.dispatch({type: CommentsActionType.AddComment, payload:newComment});
   }
+
+  public async deleteComment(id: number): Promise<void> {
+    await axios.delete<number>(appConfig.comments + id);
+  };
+
+  public resetComments(): void {
+    commentsStore.dispatch({type: CommentsActionType.ResetComments});
+  };
 
 }
 

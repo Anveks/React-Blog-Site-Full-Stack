@@ -100,6 +100,7 @@ router.put("/update-comments", async (request: Request, response: Response, next
     }
 });
 
+// DELETE COMMENT
 router.delete("/delete-comment", async (request: Request, response: Response, next: NextFunction) => {
     try {
         const id = +request.body.commentId;

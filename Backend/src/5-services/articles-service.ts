@@ -91,9 +91,9 @@ async function getCommentsPerArticle(id: number): Promise<CommentModel[]> {
   const sql = `
   SELECT
   comments.commentId,
-  comments.authorId AS commentAuthorId,
+  comments.authorId,
   comments.articleId,
-  comments.content AS commentContent,
+  comments.content,
   comments.commentDate,
   COUNT(DISTINCT CASE WHEN likes.likeType = 1 THEN likes.userId END) AS likeCount,
   COUNT(DISTINCT CASE WHEN likes.likeType = 0 THEN likes.userId END) AS dislikeCount,
@@ -112,7 +112,6 @@ GROUP BY
   comments.articleId,
   comments.content,
   comments.commentDate;
-
   `;
   const comments = await dal.execute(sql, [id]);
   return comments;

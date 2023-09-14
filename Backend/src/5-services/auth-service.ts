@@ -22,7 +22,6 @@ async function register(user: UserModel): Promise<string>{
   const result: OkPacket = await dal.execute(sql, [ user.firstName, user.lastName, user.username, user.email, user.password, user.roleId ]);
   user.userId = result.insertId;
 
-  // add token
   const token = cyber.createToken(user);
   
   return token;

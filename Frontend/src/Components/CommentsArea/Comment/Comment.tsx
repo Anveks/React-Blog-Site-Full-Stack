@@ -1,9 +1,14 @@
 import { CommentModel } from "../../../Models/CommentModel";
+import { authStore } from "../../../Redux/AuthState";
 import dateFormatter from "../../../Services/DateFormatter";
 import "./Comment.css";
 
 function Comment(props: CommentModel): JSX.Element {
-    const { authorFullName, commentContent, commentDate, dislikeCount, likeCount } = props;
+    const { authorFullName, content, commentDate, dislikeCount, likeCount, authorId } = props;
+    const currentId = authStore.getState().user.userId;
+
+    console.log(props);
+
 
     return (
         <div className="Comment">
@@ -13,10 +18,13 @@ function Comment(props: CommentModel): JSX.Element {
             </div>
 
             <div className="date-content">
-
                 <p className="date">{dateFormatter(commentDate)}</p>
+                {currentId === authorId
+                    ? <><button className="delete-btn">Delete</button>
+                        <button className="upd-button">Update</button></>
+                    : ""}
 
-                <p>{commentContent}</p>
+                <p>{content}</p>
 
                 <div className="likes">
                     <p>▲ {likeCount}</p>
