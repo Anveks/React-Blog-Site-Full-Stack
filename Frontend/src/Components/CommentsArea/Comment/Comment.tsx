@@ -5,11 +5,14 @@ import commentService from "../../../Services/CommentsService";
 import dateFormatter from "../../../Services/DateFormatter";
 import notifyService from "../../../Services/NotifyService";
 import "./Comment.css";
+import ClearIcon from '@mui/icons-material/Clear';
+import EditIcon from '@mui/icons-material/Edit';
+import SaveIcon from '@mui/icons-material/Save';
+
 
 function Comment(props: CommentModel): JSX.Element {
 
     const { authorFullName, content, commentDate, dislikeCount, likeCount, authorId, commentId, isEdited } = props;
-    console.log(isEdited);
 
     const currentId = authStore.getState().user?.userId;
 
@@ -18,6 +21,7 @@ function Comment(props: CommentModel): JSX.Element {
 
     const [currentContent, setCurrentContent] = useState<string>(content);
     const [editable, setEditable] = useState<boolean>(false);
+    const [edited, setEdited] = useState<number>(isEdited);
     const textareaRef = useRef(null);
 
     const deleteComment = async () => {
@@ -47,6 +51,7 @@ function Comment(props: CommentModel): JSX.Element {
             }
             setCurrentContent(updatedContent);
             setEditable(false);
+            setEdited(1);
         }
     };
 
@@ -60,14 +65,22 @@ function Comment(props: CommentModel): JSX.Element {
             </div>
 
             <div className="date-content">
-                <p className="date">{dateFormatter(commentDate)}</p>
-                {currentId === authorId
-                    ? <><button className="delete-btn" onClick={deleteComment}>Delete</button>
-                        <button className="upd-button" onClick={updateComment}>{editable ? "Save" : "Update"}</button></>
-                    : ""}
+                <div className="date">
+                    <p>{dateFormatter(commentDate)} {edited === 0 || edited === undefined ? "" : "edited"} </p>
+
+                    <div>
+                        {currentId === authorId
+                            ? <><button className="upd-button" onClick={updateComment}>{editable
+                                ? <SaveIcon />
+                                : <EditIcon />}</button>
+
+                                <button className="delete-btn" onClick={deleteComment}><ClearIcon /></button></>
+                            : ""}
+                    </div>
+                </div>
                 {
                     editable
-                        ? <textarea ref={textareaRef} placeholder={currentContent}></textarea>
+                        ? <textarea ref={textareaRef} placeholder={currentContent} minLength={1}></textarea>
                         : <p>{currentContent}</p>
                 }
 

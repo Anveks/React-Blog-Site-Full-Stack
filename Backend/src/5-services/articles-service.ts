@@ -119,7 +119,7 @@ GROUP BY
 }
 
 async function addComment(comment: CommentModel): Promise<CommentModel>{
-  const sql = `INSERT INTO comments VALUES (DEFAULT, ?, ?, ?, DEFAULT)`;
+  const sql = `INSERT INTO comments VALUES (DEFAULT, ?, ?, ?, DEFAULT, 0)`;
   const result: OkPacket = await dal.execute(sql, [comment.authorId, comment.articleId, comment.content]);
   comment.commentId = result.insertId;
   return comment;

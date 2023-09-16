@@ -31,12 +31,30 @@
   justify-content: flex-end;
 }
 
+.date-content > textarea {
+  width: 85%;
+  height: 54%;
+  border-radius: 5px;
+  border: none;
+  resize: none;
+  padding: 0.3em;
+}
+
 .date {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: space-between;
   font-size: 12px;
   font-style: italic;
   text-align: left;
   white-space: nowrap;
   color: var(--color-primary);
+}
+
+.date > div > button {
+  margin-left: .5rem;
+  border: transparent;
+  background-color: transparent;
 }
 
 .likes {
