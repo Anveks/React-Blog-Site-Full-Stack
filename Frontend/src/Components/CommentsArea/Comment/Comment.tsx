@@ -66,21 +66,45 @@ function Comment(props: CommentModel): JSX.Element {
 
             <div className="date-content">
                 <div className="date">
-                    <p>{dateFormatter(commentDate)} {edited === 0 || edited === undefined ? "" : "edited"} </p>
+                    <p>
+                        {dateFormatter(commentDate)}
+                        &nbsp;
+                        {edited === 0 || edited === undefined ? "" : "edited"}
+                    </p>
 
                     <div>
                         {currentId === authorId
-                            ? <><button className="upd-button" onClick={updateComment}>{editable
-                                ? <SaveIcon />
-                                : <EditIcon />}</button>
+                            ? <>
+                                {/* EDIT BUTTON */}
+                                <button
+                                    className={currentContent.length > 0 ? "" : "disabled"}
+                                    disabled={currentContent.length > 0 ? false : true}
+                                    onClick={updateComment}>
+                                    {editable
+                                        ? <SaveIcon />
+                                        : <EditIcon />}
+                                </button>
 
-                                <button className="delete-btn" onClick={deleteComment}><ClearIcon /></button></>
+                                {/* DELETE BUTTON */}
+                                <button
+                                    className={!editable ? "" : "disabled"}
+                                    disabled={!editable ? false : true}
+                                    onClick={deleteComment}>
+                                    <ClearIcon />
+                                </button>
+                            </>
                             : ""}
                     </div>
                 </div>
+
+                {/* EDIT TEXTAREA */}
                 {
                     editable
-                        ? <textarea ref={textareaRef} placeholder={currentContent} minLength={1}></textarea>
+                        ? <textarea
+                            ref={textareaRef}
+                            value={currentContent}
+                            onChange={(e) => setCurrentContent(e.target.value)}>
+                        </textarea>
                         : <p>{currentContent}</p>
                 }
 
