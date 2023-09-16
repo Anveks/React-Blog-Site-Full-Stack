@@ -5,6 +5,7 @@ export class CommentModel {
   public articleId: number;
   public content: string;
   public commentDate: string;
+  public isEdited: boolean;
 
   public constructor(comment: CommentModel){
     this.commentId = comment.commentId;
@@ -12,5 +13,6 @@ export class CommentModel {
     this.articleId = comment.articleId;
     this.content = comment.content;
     this.commentDate = comment.commentDate;
+    this.isEdited = comment.isEdited;
   }
 }

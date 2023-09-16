@@ -16,6 +16,9 @@ function CommentsSection({ articleId }: CommentsSectionProps): JSX.Element {
     const [token, setToken] = useState<string>(authStore.getState().token);
     const [comments, setComments] = useState<CommentModel[]>(commentsStore.getState().comments);
 
+    console.log(comments);
+
+
     // get all comments
     useEffect(() => {
         commentService.getCommentsPerArticle(+articleId)

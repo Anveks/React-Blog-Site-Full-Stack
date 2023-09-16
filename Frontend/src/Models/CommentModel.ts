@@ -8,4 +8,5 @@ export class CommentModel {
   public commentDate: string;
   public dislikeCount: number;
   public likeCount: number;
+  public isEdited: number;
 }

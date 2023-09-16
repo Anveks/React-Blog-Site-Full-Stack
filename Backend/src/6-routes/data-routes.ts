@@ -91,9 +91,10 @@ router.post("/comments", async (request: Request, response: Response, next: Next
 // UPDATE COMMENT
 router.put("/update-comment", async (request: Request, response: Response, next: NextFunction) => {
     try {
-        const comment = new CommentModel(request.body);
-        const updatedComment = await dataService.updateComment(comment);
-        response.json(updatedComment);
+        const updatedData = request.body.data;
+        console.log(updatedData);
+        await dataService.updateComment(updatedData.id, updatedData.content);
+        response.json("updated!");
     }
     catch(err: any) {
         next(err);        
@@ -101,10 +102,9 @@ router.put("/update-comment", async (request: Request, response: Response, next:
 });
 
 // DELETE COMMENT
-router.delete("/delete-comment/:id[0-9]+", async (request: Request, response: Response, next: NextFunction) => {
+router.delete("/delete-comment", async (request: Request, response: Response, next: NextFunction) => {
     try {
-        console.log('from delete comment');
-        const id = +request.params.id;
+        const id = +request.body.id;
         await dataService.deleteComment(id);
         response.sendStatus(204);
     }

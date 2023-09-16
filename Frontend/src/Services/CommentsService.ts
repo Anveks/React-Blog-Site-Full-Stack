@@ -29,8 +29,14 @@ class CommentService {
   }
 
   public async deleteComment(id: number): Promise<void> {
-    await axios.delete(appConfig.deleteComment + id);
+    const data = {id: id};
+    await axios.delete(appConfig.deleteComment, {data: data});
   };
+
+  public async updateComment(id: number, content: string): Promise<void> {
+    const updatedComment = {id: id, content: content};
+    await axios.put(appConfig.updateComment, {data: updatedComment});
+  }
 
   public resetComments(): void {
     commentsStore.dispatch({type: CommentsActionType.ResetComments});

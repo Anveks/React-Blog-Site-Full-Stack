@@ -95,6 +95,7 @@ async function getCommentsPerArticle(id: number): Promise<CommentModel[]> {
   comments.articleId,
   comments.content,
   comments.commentDate,
+  comments.isEdited,
   COUNT(DISTINCT CASE WHEN likes.likeType = 1 THEN likes.userId END) AS likeCount,
   COUNT(DISTINCT CASE WHEN likes.likeType = 0 THEN likes.userId END) AS dislikeCount,
   CONCAT(users.firstName, ' ', users.lastName) AS authorFullName
@@ -124,14 +125,13 @@ async function addComment(comment: CommentModel): Promise<CommentModel>{
   return comment;
 }
 
-async function updateComment(comment: CommentModel): Promise<CommentModel>{
+async function updateComment(id: number, content: string): Promise<void>{
   const sql = `
   UPDATE comments
-  SET content = ?
+  SET content = ?, isEdited = 1
   WHERE commentId = ?;
   `;
-  const result: OkPacket = await dal.execute(sql, [comment.content, comment.commentId]);
-  return comment;
+  await dal.execute(sql, [content, id]);
 }
 
 async function deleteComment(id: number): Promise<void> {
