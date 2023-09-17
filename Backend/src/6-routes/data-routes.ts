@@ -80,6 +80,7 @@ router.get("/comments/:id([0-9]+)", async (request: Request, response: Response,
 router.post("/comments", async (request: Request, response: Response, next: NextFunction) => {
     try {
         const comment = new CommentModel(request.body);
+        console.log(comment);
         const newComment = await dataService.addComment(comment);
         response.status(201).json(newComment);
     }

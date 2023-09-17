@@ -12,10 +12,12 @@ function AddComment(): JSX.Element {
     const params = useParams();
 
     const addComment = async () => {
-        const comment = {
+
+        const comment: any = {
             "authorId": +authStore.getState().user.userId,
             "articleId": +params.id,
             "content": textareaRef.current.value,
+            "parentCommentId": null
         }
 
         try {

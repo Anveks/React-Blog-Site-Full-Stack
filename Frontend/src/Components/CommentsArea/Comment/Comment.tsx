@@ -8,7 +8,7 @@ import "./Comment.css";
 import ClearIcon from '@mui/icons-material/Clear';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
-
+import AddReply from "../AddReply/AddReply";
 
 function Comment(props: CommentModel): JSX.Element {
 
@@ -23,6 +23,8 @@ function Comment(props: CommentModel): JSX.Element {
     const [editable, setEditable] = useState<boolean>(false);
     const [edited, setEdited] = useState<number>(isEdited);
     const textareaRef = useRef(null);
+
+    const [isAddReplyVisible, setIsAddReplyVisible] = useState(false);
 
     const deleteComment = async () => {
         try {
@@ -55,10 +57,14 @@ function Comment(props: CommentModel): JSX.Element {
         }
     };
 
+    const toggleReply = () => {
+        setIsAddReplyVisible(!isAddReplyVisible);
+    };
+
     if (!visible) return null;
 
     return (
-        <div className={`Comment ${isFadingOut ? "fade-out" : ""}`}>
+        <><div className={`Comment ${isFadingOut ? "fade-out" : ""}`}>
             <div className="comment-image">
                 <p>{authorFullName}</p>
                 <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541" />
@@ -98,23 +104,24 @@ function Comment(props: CommentModel): JSX.Element {
                 </div>
 
                 {/* EDIT TEXTAREA */}
-                {
-                    editable
-                        ? <textarea
-                            ref={textareaRef}
-                            value={currentContent}
-                            onChange={(e) => setCurrentContent(e.target.value)}>
-                        </textarea>
-                        : <p>{currentContent}</p>
-                }
+                {editable
+                    ? <textarea
+                        ref={textareaRef}
+                        value={currentContent}
+                        onChange={(e) => setCurrentContent(e.target.value)}>
+                    </textarea>
+                    : <p>{currentContent}</p>}
 
                 <div className="likes">
+                    <button onClick={toggleReply}>Reply</button>
                     <p>▲ {likeCount}</p>
                     <p>▼ {dislikeCount}</p>
                 </div>
 
             </div>
         </div>
+            <> {isAddReplyVisible && <AddReply authorFullName={authorFullName} />} </>
+        </>
     );
 }
 

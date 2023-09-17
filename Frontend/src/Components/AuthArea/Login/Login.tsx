@@ -43,7 +43,7 @@ function Login(): JSX.Element {
                 <br />
 
                 <div className="buttons">
-                    <button>Submit</button>
+                    <button>Login</button>
                     <Link to="/register">
                         <button>Register</button>
                     </Link>
