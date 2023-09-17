@@ -9,4 +9,5 @@ export class CommentModel {
   public dislikeCount: number;
   public likeCount: number;
   public isEdited: number;
+  public parentCommentId: number;
 }

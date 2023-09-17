@@ -9,6 +9,8 @@ import ClearIcon from '@mui/icons-material/Clear';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
 import AddReply from "../AddReply/AddReply";
+import { commentsStore } from "../../../Redux/CommentsState";
+import CommentReply from "../CommentReply/CommentReply";
 
 function Comment(props: CommentModel): JSX.Element {
 
@@ -120,7 +122,19 @@ function Comment(props: CommentModel): JSX.Element {
 
             </div>
         </div>
-            <> {isAddReplyVisible && <AddReply authorFullName={authorFullName} />} </>
+            <>
+                {
+                    isAddReplyVisible && <AddReply authorFullName={authorFullName} parentCommentId={commentId} toggleReply={toggleReply} />
+                }
+            </>
+
+            <>
+                {
+                    commentsStore.getState().comments
+                        .filter((comment) => comment.parentCommentId === commentId)
+                        .map((comment) => <CommentReply comment={comment} />)
+                }
+            </>
         </>
     );
 }

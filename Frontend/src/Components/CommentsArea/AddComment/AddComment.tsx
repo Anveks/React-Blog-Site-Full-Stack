@@ -32,7 +32,12 @@ function AddComment(): JSX.Element {
     return (
         <div className="AddComment">
             <h4>Add a comment: </h4>
-            <textarea placeholder="Type your comment here..." ref={textareaRef}></textarea>
+
+            <textarea
+                placeholder="Type your comment here..."
+                ref={textareaRef}>
+            </textarea>
+
             <button onClick={addComment}>Submit</button>
         </div>
     );

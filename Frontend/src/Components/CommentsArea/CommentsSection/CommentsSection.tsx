@@ -18,7 +18,6 @@ function CommentsSection({ articleId }: CommentsSectionProps): JSX.Element {
 
     console.log(comments);
 
-
     // get all comments
     useEffect(() => {
         commentService.getCommentsPerArticle(+articleId)
@@ -53,7 +52,7 @@ function CommentsSection({ articleId }: CommentsSectionProps): JSX.Element {
             {comments.length > 0 ? (
                 <div>
                     <h3>Comments</h3>
-                    {comments.map((comment) => <Comment {...comment} key={comment.commentId} />)}
+                    {comments.filter((comment) => comment.parentCommentId === null).map((comment) => <Comment {...comment} key={comment.commentId} />)}
                 </div>
             ) : (
                 <h3>No comments have been added yet.</h3>

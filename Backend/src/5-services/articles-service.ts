@@ -96,6 +96,7 @@ async function getCommentsPerArticle(id: number): Promise<CommentModel[]> {
   comments.content,
   comments.commentDate,
   comments.isEdited,
+  comments.parentCommentId,
   COUNT(DISTINCT CASE WHEN likes.likeType = 1 THEN likes.userId END) AS likeCount,
   COUNT(DISTINCT CASE WHEN likes.likeType = 0 THEN likes.userId END) AS dislikeCount,
   CONCAT(users.firstName, ' ', users.lastName) AS authorFullName
