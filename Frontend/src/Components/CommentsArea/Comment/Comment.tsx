@@ -112,7 +112,8 @@ function Comment(props: CommentModel): JSX.Element {
                         value={currentContent}
                         onChange={(e) => setCurrentContent(e.target.value)}>
                     </textarea>
-                    : <p>{currentContent}</p>}
+                    : <p>{currentContent}</p>
+                }
 
                 <div className="likes">
                     <button onClick={toggleReply}>Reply</button>
@@ -132,7 +133,7 @@ function Comment(props: CommentModel): JSX.Element {
                 {
                     commentsStore.getState().comments
                         .filter((comment) => comment.parentCommentId === commentId)
-                        .map((comment) => <CommentReply comment={comment} />)
+                        .map((comment) => <CommentReply comment={comment} key={comment.commentId} />)
                 }
             </>
         </>

@@ -1,3 +1,87 @@
 .CommentReply {
-	
+	display: grid;
+  grid-template-columns: .5fr 1fr 5fr;
+  grid-template-rows: 1fr;
+  background-color: var(--color-gray);
+  /* background-color: red; */
+  margin: 1rem;
+  border-radius: .3rem;
+  margin-left: auto;
+  width: 90%;
 }
+
+.comment-image {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  font-style: italic;
+  border-right: 1px solid var(--color-font-primary);
+  padding-left: .5rem;
+  padding-bottom: .5rem;
+}
+
+.comment-image > img {
+  width: 65%;
+  border-radius: .3rem;
+}
+
+.date-content {
+  position: relative;
+  padding-left: .5rem;
+  text-align: left;
+}
+
+.date-content > div:last-child {
+  justify-content: flex-end;
+}
+
+.date-content > textarea {
+  width: 85%;
+  height: 54%;
+  border-radius: 5px;
+  border: none;
+  resize: none;
+  padding: 0.3em;
+}
+
+.date {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: space-between;
+  font-size: 12px;
+  font-style: italic;
+  text-align: left;
+  white-space: nowrap;
+  color: var(--color-primary);
+}
+
+.date > div > button {
+  margin-left: .5rem;
+  border: transparent;
+  background-color: transparent;
+}
+
+.likes {
+  display: flex;
+  padding-right: .3rem;
+  gap: 1rem;
+  font-size: 15px;
+  position: absolute;
+  bottom: 0;
+  right: 1rem;
+}
+
+.likes > button {
+  border: transparent;
+  background-color: transparent;
+  font-weight: bold;
+}
+
+.likes > p:nth-child(2) {
+  color: olivedrab;
+}
+
+.likes > p:last-child {
+  color: crimson;
+}
+
