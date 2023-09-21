@@ -2,25 +2,34 @@ import { OkPacket } from "mysql";
 import { ArticleModel } from "../2-models/articles-model";
 import dal from "../4-utils/dal";
 import { CommentModel } from "../2-models/comment-model";
+import appConfig from "../4-utils/app-config";
 
 // get all articles:
-async function getAllArticles(): Promise<ArticleModel[]>{
-  // const sql = "SELECT * FROM articles";
-  const sql = `SELECT articles.*, CONCAT(users.firstName, ' ', users.lastName) AS authorFullName, COALESCE(comment_counts.commentCount, 0) AS commentsNumber
+async function getAllArticles(): Promise<ArticleModel[]> {
+  const sql = `
+  SELECT
+    articles.*,
+    CONCAT(users.firstName, ' ', users.lastName) AS authorFullName,
+    COALESCE(comment_counts.commentCount, 0) AS commentsNumber,
+    CONCAT('${appConfig.imageUrl}', articles.previewImage) AS previewImageUrl
   FROM articles
   INNER JOIN users ON articles.authorId = users.userId
   LEFT JOIN (
-      SELECT articleId, COUNT(*) AS commentCount
-      FROM comments
-      GROUP BY articleId
-  ) AS comment_counts ON articles.articleId = comment_counts.articleId`;
+    SELECT articleId, COUNT(*) AS commentCount
+    FROM comments
+    GROUP BY articleId
+  ) AS comment_counts ON articles.articleId = comment_counts.articleId
+`;
+    
   const articles = await dal.execute(sql);
   return articles;
 };
 
+
 // get one:
 async function getOneArticle(id: number): Promise<ArticleModel> {
-  const sql = `SELECT articles.*, CONCAT(users.firstName, ' ', users.lastName) AS authorFullName
+  const sql = `SELECT articles.*, CONCAT(users.firstName, ' ', users.lastName) AS authorFullName,
+  CONCAT('${appConfig.imageUrl}', articles.headImage) AS headImageUrl
   FROM articles
   INNER JOIN users ON articles.authorId = users.userId
   WHERE articles.articleId = ?`;

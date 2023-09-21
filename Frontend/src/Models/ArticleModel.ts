@@ -7,8 +7,8 @@ export class ArticleModel {
   public content: string;
   public tags: string;
   public previewText: string;
-  public previewImage: string;
-  public headImage: string;
+  public previewImageUrl: string;
+  public headImageUrl: string;
   public views: number;
   public publicationDate: string;
   public authorFullName: string;
@@ -22,8 +22,8 @@ export class ArticleModel {
     this.content = article.content;
     this.tags = article.tags;
     this.previewText = article.previewText;
-    this.previewImage = article.previewImage;
-    this.headImage = article.headImage;
+    this.previewImageUrl = article.previewImageUrl;
+    this.headImageUrl = article.headImageUrl;
     this.views = article.views;
     this.publicationDate = article.publicationDate;
   }

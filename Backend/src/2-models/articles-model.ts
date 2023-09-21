@@ -1,3 +1,4 @@
+import { UploadedFile } from "express-fileupload";
 
 export class ArticleModel {
   public articleId: number;
@@ -7,8 +8,10 @@ export class ArticleModel {
   public content: string;
   public tags: string;
   public previewText: string;
-  public previewImage: string;
-  public headImage: string;
+  public previewImage: UploadedFile;
+  public headImage: UploadedFile;
+  public previewImageUrl: string;
+  public headImageUrl: string;
   public views: number;
   public publicationDate: string;
 

@@ -13,6 +13,8 @@ function ArticleDetails(): JSX.Element {
     const params = useParams();
     const id = +params.id;
     const [article, setArticle] = useState<ArticleModel>();
+    console.log(article);
+
 
     useEffect(() => {
         articleService.getOneArticle(id)
@@ -36,7 +38,7 @@ function ArticleDetails(): JSX.Element {
                     </div>
 
                     <div className="details-image">
-                        <img src="https://img.freepik.com/free-vector/matrix-style-binary-code-digital-falling-numbers-blue-background_1017-37387.jpg?w=360" />
+                        <img src={article?.headImageUrl} />
                     </div>
 
                     <p className="preview-text"> ▷ {article?.previewText}</p>

@@ -2,6 +2,7 @@ import express, { NextFunction, Request, Response, request } from "express";
 import dataService from "../5-services/articles-service";
 import { ArticleModel } from "../2-models/articles-model";
 import { CommentModel } from "../2-models/comment-model";
+import imageHandler from "../4-utils/image-handler";
 
 const router = express.Router();
 
@@ -146,6 +147,18 @@ router.put("/update-views-by-id", async (request: Request, response: Response, n
     }
     catch(err: any) {
         next(err);        
+    }
+});
+
+// get image url
+router.get("/articles/images/:imageName", async (request: Request, response: Response, next: NextFunction) => {
+    try {
+        const imageName = request.params.imageName;
+        const imagePath = imageHandler.getImagePath(imageName);
+        response.sendFile(imagePath);
+    }
+    catch(err: any) {
+        next(err);
     }
 });
 

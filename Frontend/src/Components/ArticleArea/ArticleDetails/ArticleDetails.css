@@ -12,9 +12,9 @@
 
 .details-image > img {
   margin: auto;
-  width: 70%;
-  height: 18rem;
-  object-fit: cover;
+  max-width: 90%; /* Set the maximum width to 100% of its container */
+  height: 18rem; /* Let the height adjust automatically to maintain aspect ratio */
+  object-fit: cover; /* Adjust the object-fit property as needed (cover, contain, etc.) */
   border-radius: .2rem;
 }
 
