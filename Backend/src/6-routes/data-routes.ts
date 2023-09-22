@@ -17,6 +17,17 @@ router.get("/articles", async (request: Request, response: Response, next: NextF
     }
 });
 
+// GET ALL CATEGORIES
+router.get("/categories", async (request: Request, response: Response, next: NextFunction) => {
+    try {
+        const categories = await dataService.getAllCategories();
+        response.json(categories);
+    }
+    catch(err: any) {
+        next(err);        
+    }
+});
+
 // GET ONE
 router.get("/articles/:id([0-9]+)", async (request: Request, response: Response, next: NextFunction) => {
     try {

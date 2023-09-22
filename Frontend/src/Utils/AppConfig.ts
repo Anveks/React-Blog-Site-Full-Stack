@@ -3,6 +3,9 @@ class AppConfig {
  public registerUrl = "http://localhost:4000/api/auth/register"
  public loginUrl = "http://localhost:4000/api/auth/login"
 
+ // categories:
+ public categoriesUrl = "http://localhost:4000/api/categories";
+
  // data URL's: 
  public articlesUrl = "http://localhost:4000/api/articles/";
  public comments = "http://localhost:4000/api/comments/";

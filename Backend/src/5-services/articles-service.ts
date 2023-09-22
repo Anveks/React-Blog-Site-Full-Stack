@@ -3,6 +3,7 @@ import { ArticleModel } from "../2-models/articles-model";
 import dal from "../4-utils/dal";
 import { CommentModel } from "../2-models/comment-model";
 import appConfig from "../4-utils/app-config";
+import CategoryModel from "../2-models/category-model";
 
 // get all articles:
 async function getAllArticles(): Promise<ArticleModel[]> {
@@ -24,6 +25,12 @@ async function getAllArticles(): Promise<ArticleModel[]> {
   const articles = await dal.execute(sql);
   return articles;
 };
+
+async function getAllCategories(): Promise<CategoryModel[]>{
+  const sql = "SELECT * FROM categories";
+  const categories = await dal.execute(sql);
+  return categories;
+}
 
 
 // get one:
@@ -178,5 +185,6 @@ export default {
   deleteComment,
   addLike,
   removeLike,
-  updateViews
+  updateViews,
+  getAllCategories
 };

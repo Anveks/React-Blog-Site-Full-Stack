@@ -8,10 +8,11 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
+import { useNavigate } from "react-router-dom";
 
 function Profile(): JSX.Element {
     const editor = authStore.getState().user.roleId === 2;
-    console.log(editor);
+    const navigate = useNavigate();
 
     const [active, setActive] = useState(false);
 
@@ -32,7 +33,7 @@ function Profile(): JSX.Element {
                 {active && (
                     <div className="dropdown-menu active">
                         <p> <PersonIcon /> View Profile</p>
-                        {editor && <p> <AddIcon /> Add Article</p>}
+                        {editor && <p onClick={() => { navigate("/add-article") }}> <AddIcon /> Add Article</p>}
                         <p> <SettingsIcon /> Settings</p>
                         <p onClick={logout}> <LogoutIcon /> Logout</p>
                     </div>

@@ -1,0 +1,59 @@
+.AddArticle {
+	background-color: whitesmoke;
+  width: 90%;
+  display: grid;
+  margin: 0.25rem auto;
+  border-radius: 0.55rem;
+}
+
+.AddArticle > form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: center;
+  padding-bottom: 1rem;
+  /* background-color: rebeccapurple; */
+  text-align: left;
+}
+
+.form-main > input, select {
+  padding: 1rem;
+  border: 1px solid var(--color-primary);
+  border-radius: .5rem;
+}
+
+.form-main > textarea {
+  height: 10rem;
+  resize: none;
+  border: 1px solid var(--color-primary);
+  border-radius: .5rem;
+  padding: 1rem;
+}
+
+.form-images > input, select {
+  padding: 1rem;
+  border: 1px solid var(--color-primary);
+  border-radius: .5rem;
+}
+
+.form-main, .form-images {
+  /* background-color: yellowgreen; */
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.form-images {
+  /* background-color: lightcyan; */
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.form-images > label {
+  margin-top: 1rem;
+}
+
+.form-main > label {
+  margin-top: 1rem;
+}
+

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { ArticleModel } from "../Models/ArticleModel";
 import appConfig from "../Utils/AppConfig";
+import { CategoryModel } from "../Models/CategoryModel";
 
 
 class ArticlesService {
@@ -9,6 +10,12 @@ class ArticlesService {
     const result = await axios.get<ArticleModel[]>(appConfig.articlesUrl);
     const articles = result.data;
     return articles;
+  }
+
+  public async getAllCategories(): Promise<CategoryModel[]>{
+    const result = await axios.get<CategoryModel[]>(appConfig.categoriesUrl);
+    const categories = result.data;
+    return categories;
   }
 
   public async getOneArticle(id: number):Promise<ArticleModel>{
