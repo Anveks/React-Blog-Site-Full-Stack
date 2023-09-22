@@ -1,23 +1,42 @@
+import { useState } from "react";
 import { authStore } from "../../../Redux/AuthState";
 import authService from "../../../Services/AuthService";
 import "./Profile.css";
+import PersonIcon from '@mui/icons-material/Person';
+import AddIcon from '@mui/icons-material/Add';
+import SettingsIcon from '@mui/icons-material/Settings';
+import LogoutIcon from '@mui/icons-material/Logout';
+import MenuIcon from '@mui/icons-material/Menu';
+import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 
 function Profile(): JSX.Element {
-    const user = authStore.getState().user;
+    const editor = authStore.getState().user.roleId === 2;
+    console.log(editor);
+
+    const [active, setActive] = useState(false);
 
     function logout() {
         authService.logout();
     }
 
+    function toggleDropdown() {
+        setActive(!active);
+    }
+
     return (
         <div className="Profile">
-            <div className="name-img">
+            <div className="dropdown">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541" />
-                <p> Logged in as: {user.username} </p>
-            </div>
-            <div className="buttons">
-                <button>View Profile</button>
-                <button onClick={logout}>Logout</button>
+                <button onClick={toggleDropdown}> {active ? <MenuOpenIcon /> : <MenuIcon />} Menu</button>
+
+                {active && (
+                    <div className="dropdown-menu active">
+                        <p> <PersonIcon /> View Profile</p>
+                        {editor && <p> <AddIcon /> Add Article</p>}
+                        <p> <SettingsIcon /> Settings</p>
+                        <p onClick={logout}> <LogoutIcon /> Logout</p>
+                    </div>
+                )}
             </div>
         </div>
     );
