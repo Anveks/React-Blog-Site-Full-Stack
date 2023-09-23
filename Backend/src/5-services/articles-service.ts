@@ -51,18 +51,21 @@ async function addArticle(article: ArticleModel): Promise<ArticleModel> {
   let previewImageName = null;
   let headImageName = null;
 
-  if (article.headImage) {
+  if (article.previewImage) {
     previewImageName = await imageHandler.saveFile(article.headImage);
     article.previewImageUrl = appConfig.imageUrl + previewImageName;
+    article.headImage = previewImageName;
   }
 
   if (article.headImage) {
     headImageName = await imageHandler.saveFile(article.headImage);
     article.headImageUrl = appConfig.imageUrl + headImageName;
+    article.headImage = headImageName;
   }
 
-  console.log(article);
+  console.log('THIS IS FROMT HE SERVICE 🔥🔥🔥🔥🔥');
   
+  console.log(article);
 
   const sql = 'INSERT INTO articles VALUES(DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
   const result: OkPacket = await dal.execute(sql, [
