@@ -4,6 +4,7 @@ import dal from "../4-utils/dal";
 import { CommentModel } from "../2-models/comment-model";
 import appConfig from "../4-utils/app-config";
 import CategoryModel from "../2-models/category-model";
+import imageHandler from "../4-utils/image-handler";
 
 // get all articles:
 async function getAllArticles(): Promise<ArticleModel[]> {
@@ -46,6 +47,23 @@ async function getOneArticle(id: number): Promise<ArticleModel> {
 
 // post a new article:
 async function addArticle(article: ArticleModel): Promise<ArticleModel> {
+
+  let previewImageName = null;
+  let headImageName = null;
+
+  if (article.headImage) {
+    previewImageName = await imageHandler.saveFile(article.headImage);
+    article.previewImageUrl = appConfig.imageUrl + previewImageName;
+  }
+
+  if (article.headImage) {
+    headImageName = await imageHandler.saveFile(article.headImage);
+    article.headImageUrl = appConfig.imageUrl + headImageName;
+  }
+
+  console.log(article);
+  
+
   const sql = 'INSERT INTO articles VALUES(DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
   const result: OkPacket = await dal.execute(sql, [
     article.authorId,
@@ -88,7 +106,7 @@ async function updateArticle(article: ArticleModel): Promise<ArticleModel>{
     article.content,
     article.tags,
     article.previewText,
-    article.previewImage,
+    article.headImage,
     article.headImage,
     article.views,
     article.publicationDate,

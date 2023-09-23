@@ -6,7 +6,8 @@ export class ArticlesState {
 }
 
 export enum ArticlesActionType {
-  //
+  FetchArticles,
+  AddArticle
 }
 
 export interface ArticlesAction {
@@ -18,9 +19,12 @@ export function articlesReducer(currentState = new ArticlesState(), action: Arti
   const newState = { ...currentState };
 
   switch(action.type){
-    // case ArticlesActionType.FetchArticles:
-    //   newState.artilces = action.payload;
-    //   break;
+    case ArticlesActionType.FetchArticles:
+      newState.artilces = action.payload;
+      break;
+    case ArticlesActionType.AddArticle:
+      newState.artilces.push(action.payload);
+      break;
   }
 
   return newState;

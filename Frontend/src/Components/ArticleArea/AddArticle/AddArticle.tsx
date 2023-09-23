@@ -3,10 +3,20 @@ import "./AddArticle.css";
 import { CategoryModel } from "../../../Models/CategoryModel";
 import articleService from "../../../Services/ArticlesService";
 import notifyService from "../../../Services/NotifyService";
+import { ArticleModel } from "../../../Models/ArticleModel";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { getCurrentDateTime } from "../../../Services/GetCurrentDate";
+import { AuthState, authStore } from "../../../Redux/AuthState";
 
 function AddArticle(): JSX.Element {
 
     const [categories, setCategories] = useState<CategoryModel[]>([]);
+    const { handleSubmit, register, setValue } = useForm<ArticleModel>();
+    const navigate = useNavigate();
+
+    const [headImage, setHeadImage] = useState<any>();
+    const [previewImage, setPreviewImage] = useState<any>();
 
     useEffect(() => {
         articleService.getAllCategories()
@@ -14,42 +24,60 @@ function AddArticle(): JSX.Element {
             .catch((err) => notifyService.error(err));
     }, []);
 
-    function addArticle() {
-        //
+    async function send(article: ArticleModel) {
+
+        try {
+            article["authorId"] = authStore.getState().user.userId;
+
+            const previewFile = article.previewImage as File;
+            const headFile = article.headImage as File;
+            article.previewImage = previewFile;
+            article.headImage = headFile;
+            console.log(article);
+
+            await articleService.addArticle(article);
+            notifyService.success("A new article has been added!");
+            navigate("/");
+
+        } catch (err: any) {
+            console.log(err);
+            notifyService.error(err.message);
+        }
+
     };
 
     return (
         <div className="AddArticle">
             <h3>Add a New Article</h3>
-            <form>
+            <form onSubmit={handleSubmit(send)}>
                 <div className="form-main">
                     <label>Category: </label>
-                    <select>
-                        <option disabled>select a category</option>
-                        {categories.map((category) => <option>{category.name}</option>)}
+                    <select {...register("categoryId")}>
+                        <option selected disabled>select a category</option>
+                        {categories.map((category) => <option key={category.categoryId} value={category.categoryId}>{category.name}</option>)}
                     </select>
 
                     <label>Title: </label>
-                    <input type="text" placeholder="Javascript is Awesome" />
+                    <input type="text" placeholder="Javascript is Awesome" {...register("title")} />
 
                     <label>Content: </label>
-                    <textarea placeholder="A long time ago, in a galaxy far far away..."></textarea>
+                    <textarea placeholder="A long time ago, in a galaxy far far away..." {...register("content")}></textarea>
 
                     <label>Tags: </label>
-                    <input type="text" placeholder="JavaScript, JS, React" />
+                    <input type="text" placeholder="JavaScript, JS, React" {...register("tags")} />
 
                     <label>Preview Text: </label>
-                    <input type="text" placeholder="Javascript ES7: what to expect?" />
+                    <input type="text" placeholder="Javascript ES7: what to expect?" {...register("previewText")} />
                 </div>
 
                 <div className="form-images">
                     <label>Preview Image: </label>
-                    <input type="file" />
+                    <input type="file" {...register("previewImage")} />
 
                     <label>Head Image: </label>
-                    <input type="file" />
+                    <input type="file" {...register("headImage")} />
+                    <button type="submit">Submit</button>
                 </div>
-
             </form>
         </div>
     );
