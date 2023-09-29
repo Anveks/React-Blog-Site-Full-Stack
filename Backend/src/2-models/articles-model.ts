@@ -10,8 +10,8 @@ export class ArticleModel {
   public previewText: string;
   public headImage: UploadedFile;
   public previewImage: UploadedFile;
-  public previewImageUrl: string;
   public headImageUrl: string;
+  public previewImageUrl: string;
   public views: number;
   public publicationDate: string;
 

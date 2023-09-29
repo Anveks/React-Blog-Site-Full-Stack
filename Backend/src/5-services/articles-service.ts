@@ -52,7 +52,7 @@ async function addArticle(article: ArticleModel): Promise<ArticleModel> {
   let headImageName = null;
 
   if (article.previewImage) {
-    previewImageName = await imageHandler.saveFile(article.headImage);
+    previewImageName = await imageHandler.saveFile(article.previewImage);
     article.previewImageUrl = appConfig.imageUrl + previewImageName;
     article.headImage = previewImageName;
   }
@@ -65,9 +65,9 @@ async function addArticle(article: ArticleModel): Promise<ArticleModel> {
 
   console.log('THIS IS FROMT HE SERVICE 🔥🔥🔥🔥🔥');
   
-  console.log(article);
+  console.log(article.headImage, article.previewImage);
 
-  const sql = 'INSERT INTO articles VALUES(DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+  const sql = 'INSERT INTO articles VALUES(DEFAULT, ?, ?, ?, ?, ?, ?, DEFAULT, DEFAULT)';
   const result: OkPacket = await dal.execute(sql, [
     article.authorId,
     article.categoryId,
@@ -75,10 +75,6 @@ async function addArticle(article: ArticleModel): Promise<ArticleModel> {
     article.content,
     article.tags,
     article.previewText,
-    article.previewImage,
-    article.headImage,
-    article.views,
-    article.publicationDate
   ]);
 
   article.articleId = result.insertId;

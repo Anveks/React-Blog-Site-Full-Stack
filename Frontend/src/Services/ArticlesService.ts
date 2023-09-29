@@ -25,7 +25,8 @@ class ArticlesService {
     return article;
   }
 
-  public async addArticle(article: FormData): Promise<void> {
+  public async addArticle(article: ArticleModel): Promise<void> {
+    console.log(article);
     const headers = { "Content-Type": "multipart/form-data" };
     const result = await axios.post<ArticleModel>(appConfig.articlesUrl, article, {headers});
     const newArticle = result.data;

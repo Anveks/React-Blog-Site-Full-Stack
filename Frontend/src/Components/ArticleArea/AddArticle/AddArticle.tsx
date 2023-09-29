@@ -27,25 +27,16 @@ function AddArticle(): JSX.Element {
     async function send(article: ArticleModel) {
 
         try {
-            const formData = new FormData();
 
-            // Append form fields to the FormData
-            formData.append("categoryId", article.categoryId.toString());
-            formData.append("title", article.title);
-            formData.append("content", article.content);
-            formData.append("tags", article.tags);
-            formData.append("previewText", article.previewText);
+            const headImageFile = article.headImage as File;
+            const previewImageFile = article.previewImage as File;
+            article.headImage = headImageFile;
+            article.previewImage = previewImageFile;
+            article.authorId = authStore.getState().user.userId;
 
-            // Append the files (images)
-            formData.append("previewImage", (article.previewImage as unknown as FileList)[0]);
-            formData.append("headImage", (article.headImage as unknown as FileList)[0]);
+            console.log(article);
 
-            // Append authorId
-            formData.append("authorId", authStore.getState().user.userId.toString());
-
-            console.log(formData);
-
-            await articleService.addArticle(formData);
+            await articleService.addArticle(article);
             // await articleService.addArticle(article);
             notifyService.success("A new article has been added!");
             navigate("/");

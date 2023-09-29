@@ -42,10 +42,10 @@ router.get("/articles/:id([0-9]+)", async (request: Request, response: Response,
 
 // ADD
 router.post("/articles", async (request: Request, response: Response, next: NextFunction) => {
-    try {
+    try {        
         request.body.previewImage = request.files?.previewImage;
         request.body.headImage = request.files?.headImage;
-        const article = new ArticleModel(request.body);
+        const article = new ArticleModel(request.body);        
         const newArticle = await dataService.addArticle(article);
         response.status(201).json(newArticle);
     }
