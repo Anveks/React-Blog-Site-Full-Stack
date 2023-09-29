@@ -48,6 +48,9 @@ async function getOneArticle(id: number): Promise<ArticleModel> {
 // post a new article:
 async function addArticle(article: ArticleModel): Promise<ArticleModel> {
 
+  console.log('🔥🔥🔥🔥🔥 THIS IS FROM THE SERVICE 🔥🔥🔥🔥🔥');
+  console.log(article);
+  
   let previewImageName = null;
   let headImageName = null;
 
@@ -62,8 +65,6 @@ async function addArticle(article: ArticleModel): Promise<ArticleModel> {
     article.headImageUrl = appConfig.imageUrl + headImageName;
     article.headImage = headImageName;
   }
-
-  console.log('THIS IS FROMT HE SERVICE 🔥🔥🔥🔥🔥');
   
   console.log(article.headImage, article.previewImage);
 
@@ -75,6 +76,8 @@ async function addArticle(article: ArticleModel): Promise<ArticleModel> {
     article.content,
     article.tags,
     article.previewText,
+    article.previewImage,
+    article.headImage
   ]);
 
   article.articleId = result.insertId;

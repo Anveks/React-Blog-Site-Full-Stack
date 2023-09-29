@@ -26,25 +26,33 @@ function AddArticle(): JSX.Element {
 
     async function send(article: ArticleModel) {
 
-        try {
+        async function send(article: ArticleModel) {
+            try {
+                // Get the selected image files
+                const previewImageFile = (article.previewImage as unknown as FileList)[0];
+                const headImageFile = (article.headImage as unknown as FileList)[0];
 
-            const headImageFile = article.headImage as File;
-            const previewImageFile = article.previewImage as File;
-            article.headImage = headImageFile;
-            article.previewImage = previewImageFile;
-            article.authorId = authStore.getState().user.userId;
+                // Update the article object with the files
+                article.previewImage = previewImageFile;
+                article.headImage = headImageFile;
 
-            console.log(article);
+                // Set the authorId
+                article.authorId = authStore.getState().user.userId;
 
-            await articleService.addArticle(article);
-            // await articleService.addArticle(article);
-            notifyService.success("A new article has been added!");
-            navigate("/");
+                // Log for debugging
+                console.log(article);
 
-        } catch (err: any) {
-            console.log(err);
-            notifyService.error(err.message);
+                // Send the updated article with images
+                await articleService.addArticle(article);
+
+                notifyService.success("A new article has been added!");
+                navigate("/");
+            } catch (err: any) {
+                console.log(err);
+                notifyService.error(err.message);
+            }
         }
+
 
     };
 
