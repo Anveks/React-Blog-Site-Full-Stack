@@ -10,6 +10,7 @@ function getImagePath(imageName: string): string {
 }
 
 async function saveFile(image: UploadedFile): Promise<string>{
+  
   const fileExtension = image.name.slice(image.name.lastIndexOf("."));
   const uuidName = uuid() + fileExtension;
   const absolutePath = getImagePath(uuidName);

@@ -26,34 +26,30 @@ function AddArticle(): JSX.Element {
 
     async function send(article: ArticleModel) {
 
-        async function send(article: ArticleModel) {
-            try {
-                // Get the selected image files
-                const headImageFile = (article.headImage as unknown as FileList)[0];
-                const previewImageFile = (article.previewImage as unknown as FileList)[0];
+        try {
+            // Get the selected image files
+            const headImageFile = (article.headImage as unknown as FileList)[0];
+            const previewImageFile = (article.previewImage as unknown as FileList)[0];
 
-                // Update the article object with the files
-                article.headImage = headImageFile;
-                article.previewImage = previewImageFile;
+            // Update the article object with the files
+            article.headImage = headImageFile;
+            article.previewImage = previewImageFile;
 
-                // Set the authorId
-                article.authorId = authStore.getState().user.userId;
+            // Set the authorId
+            article.authorId = authStore.getState().user.userId;
 
-                // Log for debugging
-                console.log(article);
+            // Log for debugging
+            console.log(article);
 
-                // Send the updated article with images
-                await articleService.addArticle(article);
+            // Send the updated article with images
+            await articleService.addArticle(article);
 
-                notifyService.success("A new article has been added!");
-                navigate("/");
-            } catch (err: any) {
-                console.log(err);
-                notifyService.error(err.message);
-            }
+            notifyService.success("A new article has been added!");
+            navigate("/");
+        } catch (err: any) {
+            console.log(err);
+            notifyService.error(err.message);
         }
-
-
     };
 
     return (
@@ -62,9 +58,13 @@ function AddArticle(): JSX.Element {
             <form onSubmit={handleSubmit(send)}>
                 <div className="form-main">
                     <label>Category: </label>
-                    <select {...register("categoryId")}>
-                        <option selected disabled>select a category</option>
-                        {categories.map((category) => <option key={category.categoryId} value={category.categoryId}>{category.name}</option>)}
+                    <select {...register("categoryId")} defaultValue="">
+                        <option value="" disabled>select a category</option>
+                        {categories.map((category) => (
+                            <option key={category.categoryId} value={category.categoryId}>
+                                {category.name}
+                            </option>
+                        ))}
                     </select>
 
                     <label>Title: </label>

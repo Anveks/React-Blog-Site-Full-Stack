@@ -24,7 +24,7 @@ export class ArticleModel {
     this.tags = article.tags;
     this.previewText = article.previewText;
     this.headImage = article.headImage;
-    this.headImage = article.headImage;
+    this.previewImage = article.previewImage;
     this.views = article.views;
     this.publicationDate = article.publicationDate;
   }

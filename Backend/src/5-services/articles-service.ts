@@ -46,41 +46,43 @@ async function getOneArticle(id: number): Promise<ArticleModel> {
 };
 
 // post a new article:
-async function addArticle(article: ArticleModel): Promise<ArticleModel> {
-
-  console.log('🔥🔥🔥🔥🔥 THIS IS FROM THE SERVICE 🔥🔥🔥🔥🔥');
-  console.log(article);
-  
+async function addArticle(article: ArticleModel): Promise<ArticleModel> {  
   let previewImageName = null;
   let headImageName = null;
-
-  if (article.previewImage) {
-    previewImageName = await imageHandler.saveFile(article.previewImage);
-    article.previewImageUrl = appConfig.imageUrl + previewImageName;
-    article.headImage = previewImageName;
-  }
 
   if (article.headImage) {
     headImageName = await imageHandler.saveFile(article.headImage);
     article.headImageUrl = appConfig.imageUrl + headImageName;
     article.headImage = headImageName;
   }
+
+  if (article.previewImage) {
+    previewImageName = await imageHandler.saveFile(article.previewImage);
+    article.previewImageUrl = appConfig.imageUrl + previewImageName;
+    article.previewImage = previewImageName;
+  }  
+
+  console.log('🔥🔥🔥🔥🔥 THIS IS FROM THE SERVICE 🔥🔥🔥🔥🔥');
+  console.log(article);
   
-  console.log(article.headImage, article.previewImage);
+  const sql = `
+  INSERT INTO articles 
+  (authorId, categoryId, title, content, tags, previewText, previewImage, headImage) 
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+`;
 
-  const sql = 'INSERT INTO articles VALUES(DEFAULT, ?, ?, ?, ?, ?, ?, DEFAULT, DEFAULT)';
-  const result: OkPacket = await dal.execute(sql, [
-    article.authorId,
-    article.categoryId,
-    article.title,
-    article.content,
-    article.tags,
-    article.previewText,
-    article.previewImage,
-    article.headImage
-  ]);
+const result: OkPacket = await dal.execute(sql, [
+  article.authorId,
+  article.categoryId,
+  article.title,
+  article.content,
+  article.tags,
+  article.previewText,
+  article.previewImage, // Add the previewImage value
+  article.headImage,    // Add the headImage value
+]);
 
-  article.articleId = result.insertId;
+article.articleId = result.insertId;
   return article;
 }
 

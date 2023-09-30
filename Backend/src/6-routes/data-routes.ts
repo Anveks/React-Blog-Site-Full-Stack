@@ -43,12 +43,24 @@ router.get("/articles/:id([0-9]+)", async (request: Request, response: Response,
 // ADD
 router.post("/articles", async (request: Request, response: Response, next: NextFunction) => {
     try {        
-        console.log("THIS IS FROM THE ROUTE");
-        console.log(request.files);
-        
-        request.body.previewImage = request.files?.previewImage;
-        request.body.headImage = request.files?.headImage;
-        const article = new ArticleModel(request.body);        
+        // Access uploaded files from request.files
+        const previewImageFile = request.files?.previewImage;
+        const headImageFile = request.files?.headImage;
+
+        // Check if files were provided
+        if (!previewImageFile || !headImageFile) {
+            throw new Error("Both previewImage and headImage are required.");
+        }
+
+        // Access other fields from request.body
+        const articleData = {
+            ...request.body,
+            previewImage: previewImageFile,
+            headImage: headImageFile,
+        };      
+
+        const article = new ArticleModel(articleData);            
+
         const newArticle = await dataService.addArticle(article);
         response.status(201).json(newArticle);
     }
