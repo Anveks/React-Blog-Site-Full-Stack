@@ -72,7 +72,7 @@ button {
 button:hover {
   transition: var(--transition);
   background-color: var(--color-light);
-  background: var(--color-white);
+  background: var(--color-gray);
   color: var(--color-bg);
 }
 

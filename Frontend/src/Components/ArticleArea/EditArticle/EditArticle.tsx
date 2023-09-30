@@ -1,47 +1,28 @@
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import "./EditArticle.css";
 import { ArticleModel } from "../../../Models/ArticleModel";
-import { CategoryModel } from "../../../Models/CategoryModel";
-import { authStore } from "../../../Redux/AuthState";
 import articleService from "../../../Services/ArticlesService";
+import { useParams } from "react-router-dom";
 import notifyService from "../../../Services/NotifyService";
-import "./AddArticle.css";
+import { CategoryModel } from "../../../Models/CategoryModel";
+import { useForm } from "react-hook-form";
 
-function AddArticle(): JSX.Element {
-
+function EditArticle(): JSX.Element {
+    const [article, setArticle] = useState<ArticleModel>();
     const [categories, setCategories] = useState<CategoryModel[]>([]);
-    const { handleSubmit, register } = useForm<ArticleModel>();
-    const navigate = useNavigate();
+    const { handleSubmit, register, setValue } = useForm<ArticleModel>();
 
-    const [headImage, setHeadImage] = useState<any>();
-    const [previewImage, setPreviewImage] = useState<any>();
+    const params = useParams();
+    const id = +params.id;
 
-    // TODO: make it one function
-    const handleHeadImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        event.preventDefault();
-        const file = event.target.files?.[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setHeadImage(reader.result as string);
-            };
-            reader.readAsDataURL(file);
-        }
-    };
-
-    const handlePreviewImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        event.preventDefault();
-        const file = event.target.files?.[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setPreviewImage(reader.result as string);
-            };
-            reader.readAsDataURL(file);
-        }
-    };
-
+    useEffect(() => {
+        articleService.getOneArticle(id).then((data) => {
+            // setValue here
+            setArticle(data);
+        }).catch((err: any) => {
+            notifyService.error(err.message);
+        });
+    }, []);
 
     useEffect(() => {
         articleService.getAllCategories()
@@ -49,37 +30,9 @@ function AddArticle(): JSX.Element {
             .catch((err) => notifyService.error(err));
     }, []);
 
-    async function send(article: ArticleModel) {
-
-        try {
-            // Get the selected image files
-            const headImageFile = (article.headImage as unknown as FileList)[0];
-            const previewImageFile = (article.previewImage as unknown as FileList)[0];
-
-            // Update the article object with the files
-            article.headImage = headImageFile;
-            article.previewImage = previewImageFile;
-
-            // Set the authorId
-            article.authorId = authStore.getState().user.userId;
-
-            // Log for debugging
-            console.log(article);
-
-            // Send the updated article with images
-            await articleService.addArticle(article);
-
-            notifyService.success("A new article has been added!");
-            navigate("/");
-        } catch (err: any) {
-            console.log(err);
-            notifyService.error(err.message);
-        }
-    };
-
     return (
-        <div className="AddArticle">
-            <h3>Add a New Article</h3>
+        <div className="EditArticle">
+            <h3>Edit Article</h3>
             <form onSubmit={handleSubmit(send)}>
                 <div className="form-main">
                     <label>Category: </label>
@@ -121,4 +74,4 @@ function AddArticle(): JSX.Element {
     );
 }
 
-export default AddArticle;
+export default EditArticle;

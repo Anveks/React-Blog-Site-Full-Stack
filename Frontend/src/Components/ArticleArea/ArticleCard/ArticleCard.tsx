@@ -4,17 +4,23 @@ import dateFormatter from "../../../Services/DateFormatter";
 import "./ArticleCard.css";
 import articleService from "../../../Services/ArticlesService";
 import commentService from "../../../Services/CommentsService";
+import { authStore } from "../../../Redux/AuthState";
+import EditIcon from '@mui/icons-material/Edit';
 
 function ArticleCard(article: ArticleModel): JSX.Element {
 
-    console.log(article);
+    const editor = authStore.getState().user.roleId === 2;
 
     const { articleId, title, authorFullName, previewImageUrl, previewText, publicationDate, tags, views, commentsNumber } = article;
 
     const navigate = useNavigate();
 
-    const openDetails = () => {
-        navigate(`/article/${articleId}`);
+    const openDetails = (e: any) => {
+        if (e.target.id === "edit") {
+            navigate(`/edit-article/${articleId}`);
+        } else {
+            navigate(`/article/${articleId}`);
+        }
     }
 
     const updateViews = async () => {
@@ -30,7 +36,7 @@ function ArticleCard(article: ArticleModel): JSX.Element {
     };
 
     return (
-        <div className="ArticleCard" onClick={() => { openDetails(); updateViews(); resetComments() }}>
+        <div className="ArticleCard" onClick={(e) => { openDetails(e); updateViews(); resetComments() }}>
 
             <div className="container-top">
                 <div className="author-date">
@@ -38,7 +44,11 @@ function ArticleCard(article: ArticleModel): JSX.Element {
                     <p>{authorFullName}</p>
                 </div>
 
-                <p className="tags">{tags}</p>
+                <div className="tags-edit">
+                    <p className="tags">{tags}</p>
+                    {editor && <button><EditIcon id="edit" /></button>}
+                </div>
+
             </div>
 
             <div className="container-image">

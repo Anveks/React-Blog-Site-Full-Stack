@@ -68,3 +68,15 @@
   margin-left: 0.5rem;
 }
 
+.tags-edit {
+  display: flex;
+  gap: 1rem;
+}
+
+.tags-edit > button {
+  margin-left: .5rem;
+  gap: .2rem;
+  border: transparent;
+  background-color: transparent;
+}
+

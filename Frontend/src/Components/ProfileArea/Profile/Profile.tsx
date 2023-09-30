@@ -28,10 +28,10 @@ function Profile(): JSX.Element {
         <div className="Profile">
             <div className="dropdown">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541" />
-                <button onClick={toggleDropdown}> {active ? <MenuOpenIcon /> : <MenuIcon />} Menu</button>
+                <button onMouseEnter={toggleDropdown}> {active ? <MenuOpenIcon /> : <MenuIcon />} Menu</button>
 
                 {active && (
-                    <div className="dropdown-menu active">
+                    <div className="dropdown-menu active" onMouseLeave={toggleDropdown}>
                         <p> <PersonIcon /> View Profile</p>
                         {editor && <p onClick={() => { navigate("/add-article") }}> <AddIcon /> Add Article</p>}
                         <p> <SettingsIcon /> Settings</p>
