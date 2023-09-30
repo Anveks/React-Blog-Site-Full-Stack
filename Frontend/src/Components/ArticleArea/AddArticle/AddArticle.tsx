@@ -29,12 +29,12 @@ function AddArticle(): JSX.Element {
         async function send(article: ArticleModel) {
             try {
                 // Get the selected image files
-                const previewImageFile = (article.previewImage as unknown as FileList)[0];
                 const headImageFile = (article.headImage as unknown as FileList)[0];
+                const previewImageFile = (article.previewImage as unknown as FileList)[0];
 
                 // Update the article object with the files
-                article.previewImage = previewImageFile;
                 article.headImage = headImageFile;
+                article.previewImage = previewImageFile;
 
                 // Set the authorId
                 article.authorId = authStore.getState().user.userId;

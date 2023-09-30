@@ -44,7 +44,7 @@ router.get("/articles/:id([0-9]+)", async (request: Request, response: Response,
 router.post("/articles", async (request: Request, response: Response, next: NextFunction) => {
     try {        
         console.log("THIS IS FROM THE ROUTE");
-        console.log(request.body);
+        console.log(request.files);
         
         request.body.previewImage = request.files?.previewImage;
         request.body.headImage = request.files?.headImage;
