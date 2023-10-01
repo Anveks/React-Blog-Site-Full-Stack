@@ -32,6 +32,13 @@ class ArticlesService {
     articlesStore.dispatch({type: ArticlesActionType.AddArticle, payload: newArticle});
   }
 
+  public async updateArticle(article: ArticleModel): Promise<void> {
+    const headers = { "Content-Type": "multipart/form-data" };
+    const result = await axios.put<ArticleModel>(appConfig.articlesUrl + article.articleId, article, {headers} );
+    const updatedArticle = result.data;
+    articlesStore.dispatch({type: ArticlesActionType.UpdateArticle, payload: updatedArticle});
+  };
+
   public async updateViews(id: number): Promise<void> {   
     await axios.put<number>(appConfig.updateViews, {id: id});
   }

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./EditArticle.css";
 import { ArticleModel } from "../../../Models/ArticleModel";
 import articleService from "../../../Services/ArticlesService";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import notifyService from "../../../Services/NotifyService";
 import { CategoryModel } from "../../../Models/CategoryModel";
 import { useForm } from "react-hook-form";
@@ -11,13 +11,22 @@ function EditArticle(): JSX.Element {
     const [article, setArticle] = useState<ArticleModel>();
     const [categories, setCategories] = useState<CategoryModel[]>([]);
     const { handleSubmit, register, setValue } = useForm<ArticleModel>();
+    const navigate = useNavigate();
 
     const params = useParams();
     const id = +params.id;
 
     useEffect(() => {
         articleService.getOneArticle(id).then((data) => {
-            // setValue here
+            setValue("articleId", +data.articleId);
+            setValue("authorId", +data.authorId);
+            setValue("categoryId", +data.categoryId);
+            setValue("title", data.title);
+            setValue("content", data.content);
+            setValue("tags", data.tags);
+            setValue("previewText", data.previewText);
+            setValue("previewImage", data.previewImage);
+            setValue("headImage", data.headImage);
             setArticle(data);
         }).catch((err: any) => {
             notifyService.error(err.message);
@@ -30,10 +39,25 @@ function EditArticle(): JSX.Element {
             .catch((err) => notifyService.error(err));
     }, []);
 
+    async function send(article: ArticleModel) {
+        try {
+            await articleService.updateArticle(article);
+            notifyService.success("An article has been updated.");
+            navigate("/");
+        } catch (err: any) {
+            notifyService.error(err.message);
+            console.log(err);
+        }
+    }
+
     return (
         <div className="EditArticle">
             <h3>Edit Article</h3>
             <form onSubmit={handleSubmit(send)}>
+
+                <input type="hidden" {...register("articleId")} />
+                <input type="hidden" {...register("authorId")} />
+
                 <div className="form-main">
                     <label>Category: </label>
                     <select {...register("categoryId")} defaultValue="">
@@ -60,14 +84,16 @@ function EditArticle(): JSX.Element {
 
                 <div className="form-images">
                     <label>Preview Image: </label>
-                    <input type="file" {...register("previewImage")} accept="image/*" onChange={handlePreviewImageChange} />
-                    {previewImage && <img src={previewImage} alt="Image Preview" />}
+                    <input type="file" {...register("previewImage")} accept="image/*" />
+                    {/* onChange={handlePreviewImageChange} */}
+                    {article?.previewImageUrl && <img src={article?.previewImageUrl} alt="Image Preview" />}
 
                     <label>Head Image: </label>
-                    <input type="file" {...register("headImage")} accept="image/*" onChange={handleHeadImageChange} />
-                    {headImage && <img src={headImage} alt="Image Preview" />}
+                    <input type="file" {...register("headImage")} accept="image/*" />
+                    {/* onChange={handleHeadImageChange} */}
+                    {article?.headImageUrl && <img src={article?.headImageUrl} alt="Image Preview" />}
 
-                    <button type="submit">Submit</button>
+                    <button type="submit">Save Changes</button>
                 </div>
             </form>
         </div>

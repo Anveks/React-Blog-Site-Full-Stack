@@ -37,7 +37,8 @@ async function getAllCategories(): Promise<CategoryModel[]>{
 // get one:
 async function getOneArticle(id: number): Promise<ArticleModel> {
   const sql = `SELECT articles.*, CONCAT(users.firstName, ' ', users.lastName) AS authorFullName,
-  CONCAT('${appConfig.imageUrl}', articles.headImage) AS headImageUrl
+  CONCAT('${appConfig.imageUrl}', articles.headImage) AS headImageUrl,
+  CONCAT('${appConfig.imageUrl}', articles.previewImage) AS previewImageUrl
   FROM articles
   INNER JOIN users ON articles.authorId = users.userId
   WHERE articles.articleId = ?`;
@@ -99,8 +100,6 @@ async function updateArticle(article: ArticleModel): Promise<ArticleModel>{
   previewText = ?,
   previewImage = ?,
   headImage = ?,
-  views = ?,
-  publicationDate = ?
   WHERE articleId = ?
   `;
   const result: OkPacket = await dal.execute(sql, [
@@ -112,8 +111,6 @@ async function updateArticle(article: ArticleModel): Promise<ArticleModel>{
     article.previewText,
     article.headImage,
     article.headImage,
-    article.views,
-    article.publicationDate,
     article.articleId
   ])
 

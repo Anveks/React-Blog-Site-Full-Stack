@@ -2,12 +2,13 @@ import { createStore } from "redux";
 import { ArticleModel } from "../Models/ArticleModel";
 
 export class ArticlesState {
-  public artilces: ArticleModel[] = [];
+  public articles: ArticleModel[] = [];
 }
 
 export enum ArticlesActionType {
   FetchArticles,
-  AddArticle
+  AddArticle,
+  UpdateArticle
 }
 
 export interface ArticlesAction {
@@ -20,10 +21,14 @@ export function articlesReducer(currentState = new ArticlesState(), action: Arti
 
   switch(action.type){
     case ArticlesActionType.FetchArticles:
-      newState.artilces = action.payload;
+      newState.articles = action.payload;
       break;
     case ArticlesActionType.AddArticle:
-      newState.artilces.push(action.payload);
+      newState.articles.push(action.payload);
+      break;
+    case ArticlesActionType.UpdateArticle:
+      const index = newState.articles.findIndex(a => a.articleId === action.payload.articleId);
+      if (index >= 0) newState.articles[index] = action.payload;
       break;
   }
 
