@@ -5,6 +5,7 @@ import { CommentModel } from "../2-models/comment-model";
 import appConfig from "../4-utils/app-config";
 import CategoryModel from "../2-models/category-model";
 import imageHandler from "../4-utils/image-handler";
+import { ResourceNotFoundError } from "../2-models/client-errors";
 
 // get all articles:
 async function getAllArticles(): Promise<ArticleModel[]> {
@@ -87,9 +88,58 @@ article.articleId = result.insertId;
   return article;
 }
 
+async function getImageName(articleId: number, headImage?: boolean): Promise<string> {
+  let sql: string;
+  console.log('🔔🔔🔔 GET IMAGE FUNCTION 🔔🔔🔔');
+  if (headImage === undefined) headImage = false;
+  console.log(headImage);
+  
+  if (headImage) {
+    sql = `SELECT headImage FROM articles WHERE articleId = ?`; 
+  } else {
+    sql = `SELECT previewImage FROM articles WHERE articleId = ?`;
+  }
+
+  console.log(sql);
+  const result = await dal.execute(sql, [articleId]);
+
+  if (headImage) {
+    const imageName = result[0]?.headImage;
+    return imageName;
+  } else {
+    const imageName = result[0]?.previewImage;
+    return imageName;
+  }
+
+}
+
 // edit an article:
 async function updateArticle(article: ArticleModel): Promise<ArticleModel>{
   // TODO: validation
+
+  let currentHeadImageName = await getImageName(+article.articleId, true);
+  let currentPreviewImageName = await getImageName(+article.articleId);
+
+  console.log('🔥🔥🔥 SERVICE 🔥🔥🔥');
+  console.log('Article:', article);
+  console.log('Current Head Image:', currentHeadImageName);
+  console.log('Current Preview Image:', currentPreviewImageName);
+
+  if (article.headImage) {
+    console.log('Updating Head Image...');
+    currentHeadImageName = await imageHandler.updateImage(article.headImage, currentHeadImageName);
+  }
+
+  if (article.previewImage) {
+    console.log('Updating Preview Image...');
+    currentPreviewImageName = await imageHandler.updateImage(article.previewImage, currentPreviewImageName);
+  }
+
+  console.log('Updated Head Image Name:', currentHeadImageName);
+  console.log('Updated Preview Image Name:', currentPreviewImageName);
+
+  article.headImageUrl = appConfig.imageUrl + currentHeadImageName;
+  article.previewImageUrl = appConfig.imageUrl + currentPreviewImageName;
 
   const sql = `UPDATE articles SET 
   authorId = ?,
@@ -99,7 +149,7 @@ async function updateArticle(article: ArticleModel): Promise<ArticleModel>{
   tags = ?,
   previewText = ?,
   previewImage = ?,
-  headImage = ?,
+  headImage = ?
   WHERE articleId = ?
   `;
   const result: OkPacket = await dal.execute(sql, [
@@ -109,10 +159,15 @@ async function updateArticle(article: ArticleModel): Promise<ArticleModel>{
     article.content,
     article.tags,
     article.previewText,
-    article.headImage,
+    article.previewImage,
     article.headImage,
     article.articleId
   ])
+
+  if (result.affectedRows === 0) throw new ResourceNotFoundError(article.articleId);
+
+  delete article.headImage;
+  delete article.previewImage;
 
   return article;
 }

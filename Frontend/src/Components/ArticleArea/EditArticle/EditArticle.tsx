@@ -41,6 +41,12 @@ function EditArticle(): JSX.Element {
 
     async function send(article: ArticleModel) {
         try {
+            const headImageFile = (article.headImage as unknown as FileList)[0];
+            const previewImageFile = (article.previewImage as unknown as FileList)[0];
+
+            article.headImage = headImageFile;
+            article.previewImage = previewImageFile;
+
             await articleService.updateArticle(article);
             notifyService.success("An article has been updated.");
             navigate("/");

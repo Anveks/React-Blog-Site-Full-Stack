@@ -73,7 +73,20 @@ router.post("/articles", async (request: Request, response: Response, next: Next
 router.put("/articles/:id([0-9]+)", async (request: Request, response: Response, next: NextFunction) => {
     try {
         request.body.articleId = +request.params.id;
-        const article = new ArticleModel(request.body);
+        const previewImageFile = request.files?.previewImage;
+        const headImageFile = request.files?.headImage;
+
+        if (!previewImageFile || !headImageFile) {
+            throw new Error("Both previewImage and headImage are required.");
+        }
+
+        const articleData = {
+            ...request.body,
+            previewImage: previewImageFile,
+            headImage: headImageFile,
+        };      
+
+        const article = new ArticleModel(articleData);   
         const updatedArticle = await dataService.updateArticle(article);
         response.json(updatedArticle);
     }

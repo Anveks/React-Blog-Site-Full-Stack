@@ -26,7 +26,6 @@ async function updateImage(image: UploadedFile, currentImageName: string): Promi
 
 async function deleteImage(imageName: string): Promise<void>{
   try {
-
     if(!imageName) return;
     const absolutePath = getImagePath(imageName);
     await fsPromises.unlink(absolutePath);
