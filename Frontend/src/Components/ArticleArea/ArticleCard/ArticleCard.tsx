@@ -9,7 +9,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 function ArticleCard(article: ArticleModel): JSX.Element {
 
-    const editor = authStore.getState().user.roleId === 2;
+    const editor = authStore.getState().user?.roleId === 2;
 
     const { articleId, title, authorFullName, previewImageUrl, previewText, publicationDate, tags, views, commentsNumber } = article;
 

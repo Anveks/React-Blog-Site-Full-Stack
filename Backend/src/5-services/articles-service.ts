@@ -159,8 +159,8 @@ async function updateArticle(article: ArticleModel): Promise<ArticleModel>{
     article.content,
     article.tags,
     article.previewText,
-    article.previewImage,
-    article.headImage,
+    currentPreviewImageName,
+    currentHeadImageName,
     article.articleId
   ])
 

@@ -76,9 +76,9 @@ router.put("/articles/:id([0-9]+)", async (request: Request, response: Response,
         const previewImageFile = request.files?.previewImage;
         const headImageFile = request.files?.headImage;
 
-        if (!previewImageFile || !headImageFile) {
-            throw new Error("Both previewImage and headImage are required.");
-        }
+        // if (!previewImageFile || !headImageFile) {
+        //     throw new Error("Both previewImage and headImage are required.");
+        // }
 
         const articleData = {
             ...request.body,
