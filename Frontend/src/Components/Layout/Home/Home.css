@@ -1,3 +1,8 @@
-.Home {
-	
+
+.slider {
+  /* background-color: green; */
+  display: flex;
+  justify-content: center;
+  margin-left: 4%;
+  width: 100%;
 }
