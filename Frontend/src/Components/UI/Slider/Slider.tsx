@@ -9,19 +9,17 @@ function Slider(props: any): JSX.Element {
     const [current, setCurrent] = useState(0);
 
     const slideLeft = () => {
-        if (current === 0) {
-            setCurrent(indexArr.length - 1);
-        } else {
-            setCurrent(current - 1);
-        }
+        setCurrent(current === 0
+            ? indexArr.length - 1
+            : current - 1
+        );
     }
 
     const slideRight = () => {
-        if (current === indexArr.length - 1) {
-            setCurrent(0)
-        } else {
-            setCurrent(current + 1)
-        }
+        setCurrent(current === indexArr.length - 1
+            ? 0
+            : current + 1
+        );
     }
 
 
@@ -52,6 +50,16 @@ function Slider(props: any): JSX.Element {
                 {/* right arrow */}
                 <div className="slider-arrow-right" onClick={slideRight}>
                     &rsaquo;
+                </div>
+
+                <div className="slider-pagination">
+                    {indexArr.map((index: number) => <div key={index} className={
+                        index === indexArr[current]
+                            ? "pagination-dot pagination-dot-active"
+                            : "pagination-dot"}
+
+                        onClick={() => { setCurrent(index) }}
+                    ></div>)}
                 </div>
 
             </div>

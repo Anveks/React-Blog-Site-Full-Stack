@@ -82,5 +82,33 @@
   right: 15px;
 }
 
+.slider-pagination {
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translate(-50%, 0); 
+}
+
+.pagination-dot {
+  height: 10px;
+  width: 10px;
+  background-color: gainsboro;
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: 10px;
+  cursor: pointer;
+  border: 1px solid white;
+}
+
+.pagination-dot:hover {
+  transition: var(--transition);
+  transform: scale(1.2);
+}
+
+.pagination-dot-active {
+  background-color: gold;
+  transition: var(--transition);
+}
+
 
 
