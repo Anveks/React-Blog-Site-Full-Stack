@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./Slider.css";
 import { ArticleModel } from "../../../Models/ArticleModel";
 
@@ -6,6 +6,15 @@ function Slider(props: any): JSX.Element {
     let indexArr = props.articles.map((article: ArticleModel) => { return article.articleId });
 
     const [current, setCurrent] = useState(0);
+    const [autoPlay, setAutoPlay] = useState(true);
+    let timeout: string | number | NodeJS.Timeout = null;
+
+    useEffect(() => {
+        // we will need to clear the timeout later on mouseEnter event so that it wont skip to the next slide:
+        timeout = autoPlay && setTimeout(() => {
+            slideRight()
+        }, 2500);
+    });
 
     const slideLeft = () => {
         setCurrent(current === 0
@@ -27,9 +36,9 @@ function Slider(props: any): JSX.Element {
     }
 
     return (
-        <div className="Slider">
+        <div className="Slider" onMouseEnter={() => { setAutoPlay(false); timeout && clearTimeout(timeout) }} onMouseLeave={() => setAutoPlay(true)}>
             <div className="slider-wrapper">
-                {props.articles.map((article: any, index: number) => (
+                {props.articles.map((article: any) => (
                     <div
                         className={
                             article.articleId === indexArr[current]
