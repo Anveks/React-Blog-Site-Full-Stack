@@ -14,7 +14,10 @@ import AddReply from "../AddReply/AddReply";
 
 function CommentReply(props: { comment: CommentModel }): JSX.Element {
 
-    const { authorFullName, content, commentDate, dislikeCount, likeCount, authorId, commentId, isEdited } = props.comment;
+    const { authorFullName, content, commentDate, dislikeCount, likeCount, authorId, commentId, isEdited, parentCommentId } = props.comment;
+
+    const reduxComments = commentsStore.getState().comments;
+    const parentComment = reduxComments.filter((c) => c.commentId === parentCommentId);
 
     const currentId = authStore.getState().user?.userId;
 
@@ -80,6 +83,8 @@ function CommentReply(props: { comment: CommentModel }): JSX.Element {
                     <p>
                         {dateFormatter(commentDate)}
                         &nbsp;
+                        {parentComment && 'Replied to ' + parentComment[0].authorFullName}
+                        &nbsp;
                         {edited === 0 || edited === undefined ? "" : "edited"}
                     </p>
 
@@ -115,7 +120,10 @@ function CommentReply(props: { comment: CommentModel }): JSX.Element {
                         value={currentContent}
                         onChange={(e) => setCurrentContent(e.target.value)}>
                     </textarea>
-                    : <p>{currentContent}</p>}
+                    : <div>
+                        <p className="parent-comment">{parentComment[0].content}</p>
+                        <p>{currentContent}</p>
+                    </div>}
 
                 <div className="likes">
                     <button onClick={toggleReply}>Reply</button>

@@ -85,3 +85,13 @@
   color: crimson;
 }
 
+.parent-comment {
+  font-size: .8rem;
+  font-style: italic;
+  /* background-color: lightcyan; */
+  background-color: white;
+  padding: 1rem;
+  width: fit-content;
+  border-radius: .5rem;
+}
+
