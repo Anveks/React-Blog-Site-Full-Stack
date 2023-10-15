@@ -30,6 +30,7 @@ function Slider(props: any): JSX.Element {
         );
     }
 
+    // not working properly!
     const handlePaginationClick = (index: number) => {
         console.log(`Pagination dot clicked: ${index}`);
         setCurrent(index);
