@@ -4,6 +4,7 @@ import Register from "../../AuthArea/Register/Register";
 import Home from "../Home/Home";
 import AddArticle from "../../ArticleArea/AddArticle/AddArticle";
 import EditArticle from "../../ArticleArea/EditArticle/EditArticle";
+import ProfileDetails from "../../ProfileArea/ProfileDetails/ProfileDetails";
 
 function Routing(): JSX.Element {
 
@@ -15,6 +16,7 @@ function Routing(): JSX.Element {
       <Route path="/article/:id" element={<ArticleDetails />} />
       <Route path="/add-article" element={<AddArticle />} />
       <Route path="/edit-article/:id" element={<EditArticle />} />
+      <Route path='/profile-details' element={<ProfileDetails />} />
 
       {/* auth */}
       <Route path="/register" element={<Register />} />

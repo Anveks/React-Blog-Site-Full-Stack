@@ -12,6 +12,8 @@ function Register(): JSX.Element {
 
     async function submit(user: UserModel) {
         try {
+            const profilePictureFile = (user.profilePicture as unknown as FileList)[0];
+            user.profilePicture = profilePictureFile;
             await authService.register(user);
             notifyService.success("Welcome!");
             navigate("/")
@@ -40,6 +42,9 @@ function Register(): JSX.Element {
 
                 <label>Password:</label>
                 <input type="password" placeholder="********" required {...register("password")} />
+
+                <label>Profile Picture:</label>
+                <input type="file" {...register("profilePicture")} />
 
                 <button>Submit</button>
             </form>

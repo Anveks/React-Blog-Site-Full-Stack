@@ -1,5 +1,6 @@
 import Joi from "joi";
 import RoleModel from "./role-model";
+import { UploadedFile } from "express-fileupload";
 
 export class UserModel {
   public userId: number;
@@ -12,8 +13,8 @@ export class UserModel {
   public registrationDate: string;
   public isBanned: boolean;
   public isOnline: boolean;
-  public profileImage: string;
-  public profileImageUrl: string;
+  public profilePicture: UploadedFile;
+  public profilePictureUrl: string;
 
   public constructor(user: UserModel){
     this.userId = user.userId;
@@ -26,8 +27,8 @@ export class UserModel {
     this.registrationDate = user.registrationDate;
     this.isBanned = user.isBanned;
     this.isOnline = user.isOnline;
-    this.profileImage = user.profileImage;
-    this.profileImageUrl = user.profileImageUrl;
+    this.profilePicture = user.profilePicture;
+    this.profilePictureUrl = user.profilePictureUrl;
   }
 
   // post validation
@@ -42,8 +43,8 @@ export class UserModel {
     registrationDate: Joi.string().allow(""),
     isBanned: Joi.number(),
     isOnline: Joi.number(),
-    profileImage: Joi.string(),
-    profileImageUrl: Joi.string()
+    profilePicture: Joi.any(),
+    profilePictureUrl: Joi.string()
     
 });
 

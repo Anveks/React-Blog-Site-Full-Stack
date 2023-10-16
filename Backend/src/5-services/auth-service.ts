@@ -6,6 +6,7 @@ import cyber from "../4-utils/cyber";
 import dal from "../4-utils/dal";
 import RoleModel from "../2-models/role-model";
 import appConfig from "../4-utils/app-config";
+import imageHandler from "../4-utils/image-handler";
 
 async function register(user: UserModel): Promise<string>{
 
@@ -14,13 +15,20 @@ async function register(user: UserModel): Promise<string>{
 
   if(await isEmailTaken(user.email)) throw new ValidationError(`${user.email} is already in use.`);
 
+  let profilePictureName = null;
+  if (user.profilePicture) {
+    profilePictureName = await imageHandler.saveFile(user.profilePicture);
+    user.profilePictureUrl = appConfig.imageUrl + profilePictureName;
+    user.profilePicture = profilePictureName;
+  }
+
   user.roleId = RoleModel.USER;
   user.password = cyber.hashPassword(user.password);
   
-  const sql = `INSERT INTO users VALUES (NULL, ?, ?, ?, ?, ?, ?, DEFAULT, DEFAULT, DEFAULT)
+  const sql = `INSERT INTO users VALUES (NULL, ?, ?, ?, ?, ?, ?, DEFAULT, DEFAULT, DEFAULT, ?)
   `;
 
-  const result: OkPacket = await dal.execute(sql, [ user.firstName, user.lastName, user.username, user.email, user.password, user.roleId ]);
+  const result: OkPacket = await dal.execute(sql, [ user.firstName, user.lastName, user.username, user.email, user.password, user.roleId, user.profilePicture ]);
   user.userId = result.insertId;
 
   const token = cyber.createToken(user);

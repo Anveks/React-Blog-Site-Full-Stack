@@ -42,7 +42,6 @@ function AddArticle(): JSX.Element {
         }
     };
 
-
     useEffect(() => {
         articleService.getAllCategories()
             .then((categories) => setCategories(categories))

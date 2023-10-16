@@ -22,8 +22,13 @@ router.post("/auth/login", async (request: Request, response: Response, next: Ne
 // register
 router.post("/auth/register", async (request: Request, response: Response, next: NextFunction) => {
   try {
-    console.log(request.body);
-    const user = new UserModel(request.body);
+    const profilePictureFile = request.files?.profilePicture;    
+
+    const userData = {
+      ...request.body,
+      profilePicture: profilePictureFile,
+    };  
+    const user = new UserModel(userData);
     const token = await authService.register(user);
     response.status(201).json(token);
   }
