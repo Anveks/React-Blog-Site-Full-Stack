@@ -12,6 +12,8 @@ export class UserModel {
   public registrationDate: string;
   public isBanned: boolean;
   public isOnline: boolean;
+  public profileImage: string;
+  public profileImageUrl: string;
 
   public constructor(user: UserModel){
     this.userId = user.userId;
@@ -24,6 +26,8 @@ export class UserModel {
     this.registrationDate = user.registrationDate;
     this.isBanned = user.isBanned;
     this.isOnline = user.isOnline;
+    this.profileImage = user.profileImage;
+    this.profileImageUrl = user.profileImageUrl;
   }
 
   // post validation
@@ -37,7 +41,10 @@ export class UserModel {
     roleId: Joi.number().optional(),
     registrationDate: Joi.string().allow(""),
     isBanned: Joi.number(),
-    isOnline: Joi.number()
+    isOnline: Joi.number(),
+    profileImage: Joi.string(),
+    profileImageUrl: Joi.string()
+    
 });
 
   public postValidation(): string {

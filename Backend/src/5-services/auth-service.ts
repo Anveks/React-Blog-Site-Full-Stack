@@ -5,6 +5,7 @@ import UserModel from "../2-models/user-model";
 import cyber from "../4-utils/cyber";
 import dal from "../4-utils/dal";
 import RoleModel from "../2-models/role-model";
+import appConfig from "../4-utils/app-config";
 
 async function register(user: UserModel): Promise<string>{
 
@@ -33,7 +34,7 @@ async function login(credentials: CredentialsModel): Promise<string>{
 
   credentials.password = cyber.hashPassword(credentials.password);
 
-  const sql = `SELECT * FROM users WHERE email = ? AND password = ?`;
+  const sql = `SELECT *, CONCAT('${appConfig.imageUrl}', users.profilePicture) AS profilePictureUrl FROM users WHERE email = ? AND password = ?`;
   const result = await dal.execute(sql, [credentials.email, credentials.password]);
   const user = result[0];
 

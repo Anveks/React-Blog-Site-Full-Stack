@@ -11,15 +11,8 @@ export class UserModel {
   public registrationDate: string;
   public isBanned: boolean;
   public isOnline: boolean;
-
-  public constructor(user: UserModel){
-    this.userId = user.userId;
-    this.firstName = user.firstName;
-    this.lastName = user.lastName;
-    this.password = user.password;
-    this.email = user.email;
-    this.roleId = user.roleId;
-  }
+  public profilePicture: File;
+  public profilePictureUrl: string;
 }
 
 export default UserModel;

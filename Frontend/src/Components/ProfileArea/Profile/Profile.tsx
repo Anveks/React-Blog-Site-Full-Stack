@@ -11,6 +11,9 @@ import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 import { useNavigate } from "react-router-dom";
 
 function Profile(): JSX.Element {
+
+    const profileImg = authStore.getState().user.profilePictureUrl;
+
     const editor = authStore.getState().user.roleId === 2;
     const navigate = useNavigate();
 
@@ -27,7 +30,7 @@ function Profile(): JSX.Element {
     return (
         <div className="Profile">
             <div className="dropdown">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541" />
+                <img src={profileImg.indexOf('.') !== -1 ? profileImg : "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541"} />
                 <button onMouseEnter={toggleDropdown}> {active ? <MenuOpenIcon /> : <MenuIcon />} Menu</button>
 
                 {active && (

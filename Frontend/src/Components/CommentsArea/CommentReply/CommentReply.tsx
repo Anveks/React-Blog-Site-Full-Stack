@@ -70,7 +70,7 @@ function CommentReply(props: { comment: CommentModel }): JSX.Element {
 
     return (
         <><div className="CommentReply">
-            <p> <SubdirectoryArrowRightIcon /> </p>
+            {/* <p> <SubdirectoryArrowRightIcon /> </p> */}
 
             <div className="comment-image">
                 <p>{authorFullName}</p>
