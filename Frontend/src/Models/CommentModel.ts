@@ -10,4 +10,5 @@ export class CommentModel {
   public likeCount: number;
   public isEdited: number;
   public parentCommentId: number;
+  public commentAuthorProfilePicture: string;
 }

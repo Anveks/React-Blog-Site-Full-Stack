@@ -14,10 +14,12 @@ import AddReply from "../AddReply/AddReply";
 
 function CommentReply(props: { comment: CommentModel }): JSX.Element {
 
-    const { authorFullName, content, commentDate, dislikeCount, likeCount, authorId, commentId, isEdited, parentCommentId } = props.comment;
+    const { authorFullName, content, commentDate, dislikeCount, likeCount, authorId, commentId, isEdited, parentCommentId, commentAuthorProfilePicture } = props.comment;
 
     const reduxComments = commentsStore.getState().comments;
     const parentComment = reduxComments.filter((c) => c.commentId === parentCommentId);
+
+    const profileImg = authStore.getState().user.profilePictureUrl;
 
     const currentId = authStore.getState().user?.userId;
 
@@ -74,7 +76,7 @@ function CommentReply(props: { comment: CommentModel }): JSX.Element {
 
             <div className="comment-image">
                 <p>{authorFullName}</p>
-                <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541" />
+                <img src={commentAuthorProfilePicture !== "" ? commentAuthorProfilePicture : "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541"} />
             </div>
 
 

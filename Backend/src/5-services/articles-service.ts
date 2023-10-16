@@ -63,9 +63,6 @@ async function addArticle(article: ArticleModel): Promise<ArticleModel> {
     article.previewImageUrl = appConfig.imageUrl + previewImageName;
     article.previewImage = previewImageName;
   }  
-
-  console.log('🔥🔥🔥🔥🔥 THIS IS FROM THE SERVICE 🔥🔥🔥🔥🔥');
-  console.log(article);
   
   const sql = `
   INSERT INTO articles 
@@ -90,7 +87,7 @@ article.articleId = result.insertId;
 
 async function getImageName(articleId: number, headImage?: boolean): Promise<string> {
   let sql: string;
-  console.log('🔔🔔🔔 GET IMAGE FUNCTION 🔔🔔🔔');
+
   if (headImage === undefined) headImage = false;
   console.log(headImage);
   
@@ -119,11 +116,6 @@ async function updateArticle(article: ArticleModel): Promise<ArticleModel>{
 
   let currentHeadImageName = await getImageName(+article.articleId, true);
   let currentPreviewImageName = await getImageName(+article.articleId);
-
-  console.log('🔥🔥🔥 SERVICE 🔥🔥🔥');
-  console.log('Article:', article);
-  console.log('Current Head Image:', currentHeadImageName);
-  console.log('Current Preview Image:', currentPreviewImageName);
 
   if (article.headImage) {
     console.log('Updating Head Image...');
@@ -180,31 +172,33 @@ async function deleteArticle(id: number): Promise<void> {
 async function getCommentsPerArticle(id: number): Promise<CommentModel[]> {
   const sql = `
   SELECT
-  comments.commentId,
-  comments.authorId,
-  comments.articleId,
-  comments.content,
-  comments.commentDate,
-  comments.isEdited,
-  comments.parentCommentId,
-  COUNT(DISTINCT CASE WHEN likes.likeType = 1 THEN likes.userId END) AS likeCount,
-  COUNT(DISTINCT CASE WHEN likes.likeType = 0 THEN likes.userId END) AS dislikeCount,
-  CONCAT(users.firstName, ' ', users.lastName) AS authorFullName
-FROM
-  comments
-LEFT JOIN
-  likes ON comments.commentId = likes.commentId
-LEFT JOIN
-  users ON comments.authorId = users.userId
-WHERE
-  comments.articleId = ?
-GROUP BY
-  comments.commentId,
-  comments.authorId,
-  comments.articleId,
-  comments.content,
-  comments.commentDate;
-  `;
+    comments.commentId,
+    comments.authorId,
+    comments.articleId,
+    comments.content,
+    comments.commentDate,
+    comments.isEdited,
+    comments.parentCommentId,
+    COUNT(DISTINCT CASE WHEN likes.likeType = 1 THEN likes.userId END) AS likeCount,
+    COUNT(DISTINCT CASE WHEN likes.likeType = 0 THEN likes.userId END) AS dislikeCount,
+    CONCAT(users.firstName, ' ', users.lastName) AS authorFullName,
+    CONCAT('${appConfig.imageUrl}', users.profilePicture ) AS commentAuthorProfilePicture
+  FROM
+    comments
+  LEFT JOIN
+    likes ON comments.commentId = likes.commentId
+  LEFT JOIN
+    users ON comments.authorId = users.userId
+  WHERE
+    comments.articleId = ?
+  GROUP BY
+    comments.commentId,
+    comments.authorId,
+    comments.articleId,
+    comments.content,
+    comments.commentDate,
+    users.profilePicture;  -- Include the profilePicture in the GROUP BY
+`;
   const comments = await dal.execute(sql, [id]);
   return comments;
 }

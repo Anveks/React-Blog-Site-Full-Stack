@@ -7,6 +7,7 @@ export class CommentModel {
   public commentDate: string;
   public isEdited: boolean;
   public parentCommentId: number;
+  public commentAuthorImg: string;
 
   public constructor(comment: CommentModel){
     this.commentId = comment.commentId;
@@ -16,5 +17,6 @@ export class CommentModel {
     this.commentDate = comment.commentDate;
     this.isEdited = comment.isEdited;
     this.parentCommentId = comment.parentCommentId;
+    this.commentAuthorImg = comment.commentAuthorImg;
   }
 }

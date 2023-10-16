@@ -9,6 +9,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Profile(): JSX.Element {
 
@@ -35,7 +36,7 @@ function Profile(): JSX.Element {
 
                 {active && (
                     <div className="dropdown-menu active" onMouseLeave={toggleDropdown}>
-                        <p> <PersonIcon /> View Profile</p>
+                        <Link to='/profile-details'> <PersonIcon /> View Profile</Link>
                         {editor && <p onClick={() => { navigate("/add-article") }}> <AddIcon /> Add Article</p>}
                         <p> <SettingsIcon /> Settings</p>
                         <p onClick={logout}> <LogoutIcon /> Logout</p>

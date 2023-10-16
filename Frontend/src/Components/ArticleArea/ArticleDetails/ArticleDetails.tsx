@@ -13,8 +13,6 @@ function ArticleDetails(): JSX.Element {
     const params = useParams();
     const id = +params.id;
     const [article, setArticle] = useState<ArticleModel>();
-    console.log(article);
-
 
     useEffect(() => {
         articleService.getOneArticle(id)

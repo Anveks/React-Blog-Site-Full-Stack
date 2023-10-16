@@ -14,7 +14,7 @@ import CommentReply from "../CommentReply/CommentReply";
 
 function Comment(props: CommentModel): JSX.Element {
 
-    const { authorFullName, content, commentDate, dislikeCount, likeCount, authorId, commentId, isEdited } = props;
+    const { authorFullName, content, commentDate, dislikeCount, likeCount, authorId, commentId, isEdited, commentAuthorProfilePicture } = props;
 
     const currentId = authStore.getState().user?.userId;
 
@@ -69,7 +69,7 @@ function Comment(props: CommentModel): JSX.Element {
         <><div className={`Comment ${isFadingOut ? "fade-out" : ""}`}>
             <div className="comment-image">
                 <p>{authorFullName}</p>
-                <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541" />
+                <img src={commentAuthorProfilePicture !== "" ? commentAuthorProfilePicture : "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541"} />
             </div>
 
             <div className="date-content">
